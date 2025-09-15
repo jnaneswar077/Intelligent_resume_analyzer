@@ -6,15 +6,19 @@ import { api } from '../services/api';
 export default function Results({ data, onRestart }) {
   const [detail, setDetail] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [loadingRoleKey, setLoadingRoleKey] = useState('');
   if (!data) return null;
 
   async function handleSelectRole(r) {
+    const key = `${r.category}-${r.role}`;
     setLoading(true);
+    setLoadingRoleKey(key);
     try {
       const res = await api.getDetailedAnalysis({ resume_id: data.resume_id, category: r.category, role: r.role });
       setDetail(res);
     } finally {
       setLoading(false);
+      setLoadingRoleKey('');
     }
   }
   return (
@@ -24,7 +28,7 @@ export default function Results({ data, onRestart }) {
         <button className="px-3 py-1 bg-gray-200 rounded" onClick={onRestart}>Run Again</button>
       </div>
       <div className="grid gap-6">
-        <MatchResults topRoles={data.top_roles} ats={data.ats_score} onSelectRole={handleSelectRole} />
+        <MatchResults topRoles={data.top_roles} ats={data.ats_score} onSelectRole={handleSelectRole} loadingRoleKey={loadingRoleKey} />
         <Suggestions shortText={data.suggestions_short} skills={data.extracted_skills} missing={data.missing_skills_union} />
         {detail && (
           <div className="p-4 bg-white rounded shadow">

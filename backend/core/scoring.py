@@ -7,6 +7,7 @@ import numpy as np
 
 from .faiss_index import search_roles
 from .embeddings import embed_texts, load_roles_data
+from .preprocessing import extract_skills
 from backend.models.analysis_model import DetailedAnalysisResponse, GeminiPolishRequest
 import google.generativeai as genai
 
@@ -131,17 +132,44 @@ def run_detailed_analysis(
         if category and role:
             role_label = f"{category}::{role}"
 
-    # Build prompt for Gemini
+    # Compute optional role similarity and matched/missing skills for richer prompt
+    role_score_display = None
+    matched: List[str] = []
+    missing: List[str] = []
+    if role_label:
+        try:
+            cat, role_name = role_label.split("::", 1)
+            role_map = load_roles_data()
+            role_meta = (role_map.get(cat, {}) or {}).get(role_name, {})
+            role_desc = role_meta.get("description") or role_name
+            skills_for_role: List[str] = role_meta.get("skills", []) or []
+            # role similarity
+            jd_vec = embed_texts([role_desc])[0]
+            jd_vec = (jd_vec / (np.linalg.norm(jd_vec) + 1e-12)).astype(np.float32)
+            role_sim = float(np.dot(resume_vector, jd_vec))
+            role_score_display = round(role_sim * 100.0, 1)
+            # matched/missing based on resume preview tokens
+            resume_sk = set(extract_skills(resume_preview.lower()))
+            matched = [s for s in skills_for_role if s.lower() in resume_sk][:10]
+            missing = [s for s in skills_for_role if s.lower() not in resume_sk][:10]
+        except Exception:
+            pass
+
+    # Build improved prompt for Gemini
     prompt = (
-        "You are a concise, expert resume reviewer and career coach.\n"
+        "You are an expert resume coach for software/tech roles. Analyze and produce precise, actionable feedback.\n\n"
         f"Target role: {role_label or 'General'}\n"
-        f"Resume preview (sanitized):\n{resume_preview[:2000]}\n\n"
-        "Provide:\n"
-        "1) Strengths (3 bullets)\n"
-        "2) Weaknesses (3 bullets)\n"
-        "3) 5 concrete improvement steps tailored to the target role\n"
-        "4) 2 example resume bullets tailored to the target role (1 line each)\n"
-        "Keep it crisp and actionable."
+        f"Role match score: {role_score_display if role_score_display is not None else 'N/A'}%\n"
+        f"Matched skills: {', '.join(matched) if matched else '—'}\n"
+        f"Missing skills: {', '.join(missing) if missing else '—'}\n\n"
+        "Resume preview (trimmed to ~500 words):\n"
+        f"{resume_preview[:2500]}\n\n"
+        "Output in Markdown with EXACTLY: \n"
+        "1) Strengths — 3 bullets, each ≤20 words\n"
+        "2) Weaknesses — 3 bullets, each ≤20 words\n"
+        "3) Improvements — 5 bullets, start with a strong verb, include specifics/metrics where possible\n"
+        "4) Example resume bullets — 2 one-line bullets tailored to the target role, each includes a measurable outcome.\n"
+        "Rules: Be factual to the text; do not invent tools or companies; avoid generic advice."
     )
 
     api_key = os.environ.get("GEMINI_API_KEY")
@@ -157,6 +185,7 @@ def run_detailed_analysis(
             model = genai.GenerativeModel("gemini-1.5-flash")
             resp = model.generate_content(prompt)
             text = resp.text or ""
+            print("api responded" if text != "" else "api did not respond")
             # Simple parsing by sections
             def _extract(section: str) -> List[str]:
                 import re
