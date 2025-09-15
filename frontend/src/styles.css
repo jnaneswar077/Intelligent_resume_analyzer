@@ -4,3 +4,15 @@
 
 body { @apply bg-gray-50; }
 
+@layer components {
+  .container-page { @apply max-w-5xl mx-auto px-4; }
+  .section { @apply container-page py-10 space-y-6; }
+  .card { @apply bg-white rounded-xl shadow-sm border border-gray-100; }
+  .card-body { @apply p-5 md:p-6; }
+  .heading-xl { @apply text-3xl md:text-4xl font-bold tracking-tight; }
+  .subtext { @apply text-gray-600; }
+  .btn-primary { @apply inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors; }
+  .btn-secondary { @apply inline-flex items-center gap-2 px-3 py-1.5 bg-gray-100 text-gray-900 rounded-md hover:bg-gray-200 transition-colors; }
+  .pill { @apply inline-block text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 font-medium; }
+}
+
