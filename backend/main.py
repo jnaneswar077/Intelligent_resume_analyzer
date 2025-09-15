@@ -1,5 +1,15 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import os
+
+try:
+    # Load backend/.env explicitly so it works when running from repo root
+    from dotenv import load_dotenv  # type: ignore
+    from pathlib import Path
+    env_path = Path(__file__).parent / ".env"
+    load_dotenv(dotenv_path=str(env_path))
+except Exception:
+    pass
 
 from backend.routers import resume, jobs, analysis, suggestions
 

@@ -19,7 +19,11 @@ async def upload_and_analyze(
         pass
 
     content = await file.read()
+    if not content:
+        raise HTTPException(status_code=400, detail="Empty file uploaded")
     resume_text = parser.parse_resume_bytes(content, filename=file.filename or "uploaded")
+    if not resume_text.strip():
+        raise HTTPException(status_code=400, detail="Could not extract text from file. Please upload a PDF or DOCX.")
     cleaned_text = preprocessing.clean_text(resume_text)
 
     extracted_skills = preprocessing.extract_skills(cleaned_text)

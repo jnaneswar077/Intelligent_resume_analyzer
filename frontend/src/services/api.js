@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8000/api';
+const BASE = import.meta.env.VITE_API_BASE || '/api';
 
 async function getRoles() {
   const res = await axios.get(`${BASE}/roles`);
@@ -19,6 +19,12 @@ async function uploadAndAnalyze({ file, category, selected_role, job_description
   return res.data;
 }
 
-export const api = { getRoles, uploadAndAnalyze };
+async function getDetailedAnalysis({ resume_id, category, role }) {
+  const payload = { resume_id, choice: { type: 'ROLE', category, role } };
+  const res = await axios.post(`${BASE}/detailed_analysis`, payload);
+  return res.data;
+}
+
+export const api = { getRoles, uploadAndAnalyze, getDetailedAnalysis };
 
 

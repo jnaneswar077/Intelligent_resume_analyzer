@@ -38,6 +38,8 @@ frontend/yarn-error.log*
 # Env files (store secrets outside Git)
 .env
 .env.*
+.env
+.env.*
 frontend/.env
 frontend/.env.*
 backend/.env
