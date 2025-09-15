@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    image: resume-analyzer-backend:latest
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../vector_store:/app/../vector_store
+  frontend:
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile
+    image: resume-analyzer-frontend:latest
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+

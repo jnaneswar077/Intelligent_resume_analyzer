@@ -1,0 +1,20 @@
+{
+  "SDE": {
+    "Backend Developer": {
+      "description": "Backend Developer requires Java, Spring Boot, REST APIs, microservices, Docker, Kubernetes, SQL.",
+      "skills": ["Java", "Spring Boot", "REST API", "Microservices", "SQL", "Docker", "Kubernetes"]
+    },
+    "Frontend Developer": {
+      "description": "Frontend Developer: React, JavaScript, HTML, CSS.",
+      "skills": ["React", "JavaScript", "HTML", "CSS"]
+    }
+  },
+  "Data Science": {
+    "Data Scientist": {
+      "description": "Data Scientist: Python, Pandas, SQL, Machine Learning, TensorFlow/PyTorch, statistics.",
+      "skills": ["Python", "Pandas", "SQL", "Machine Learning", "TensorFlow", "PyTorch", "Statistics"]
+    }
+  }
+}
+
+

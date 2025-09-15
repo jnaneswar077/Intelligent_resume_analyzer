@@ -1,0 +1,28 @@
+python
+java
+sql
+react
+javascript
+html
+css
+docker
+kubernetes
+spring boot
+rest api
+microservices
+pandas
+tensorflow
+pytorch
+machine learning
+statistics
+aws
+azure
+gcp
+node.js
+mongodb
+postgresql
+redis
+ci/cd
+linux
+git
+

@@ -1,0 +1,62 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Logs
+logs/
+*.log
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# --- Node/Frontend (Vite/React) ---
+node_modules/
+frontend/node_modules/
+frontend/.vite/
+frontend/dist/
+frontend/.parcel-cache/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Env files (store secrets outside Git)
+.env
+.env.*
+frontend/.env
+frontend/.env.*
+backend/.env
+backend/.env.*
+
+# --- Build artifacts / caches ---
+dist/
+build/
+.cache/
+
+# --- Docker ---
+*.pid
+
+# --- Vector store ---
+# Keep lightweight keys, ignore large FAISS binaries
+vector_store/*.faiss
+!vector_store/role_keys.json
+
+# --- Misc ---
+deployment/*.tmp
+
+
