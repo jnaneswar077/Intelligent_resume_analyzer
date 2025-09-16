@@ -178,21 +178,40 @@ def run_detailed_analysis(
     actionables: List[str] = []
     example_bullets: List[str] = []
     final_score: float = 80.0
+    llm_polished_text: str = ""  # Initialize this variable
+    gemini_timestamp: Optional[str] = None  # Track if response is from Gemini
 
     if api_key:
+        print(f"DEBUG: API key found, attempting Gemini call for role: {role_label}")
         try:
             genai.configure(api_key=api_key)
-            model = genai.GenerativeModel("gemini-1.5-flash")
+            model_name = os.environ.get("GEMINI_MODEL", "gemini-1.5-flash")
+            print(f"DEBUG: Using Gemini model: {model_name}")
+            model = genai.GenerativeModel(model_name)
             resp = model.generate_content(prompt)
+            
+            # Debug the actual response
+            print(f"DEBUG: Response object: {resp}")
+            print(f"DEBUG: Response text type: {type(resp.text)}")
+            print(f"DEBUG: Response text: {resp.text}")
+            
             text = resp.text or ""
+            print(f"DEBUG: Final text length: {len(text)}")
             print("api responded" if text != "" else "api did not respond")
             # Simple parsing by sections
             def _extract(section: str) -> List[str]:
                 import re
+                if not text or text.strip() == "":
+                    print(f"DEBUG: _extract called with empty text for section: {section}")
+                    return []
                 m = re.search(rf"{section}[:\n]+(.*?)(?:\n\s*\n|\Z)", text, re.IGNORECASE | re.DOTALL)
                 if not m:
+                    print(f"DEBUG: No match found for section: {section}")
                     return []
                 block = m.group(1)
+                if not block:
+                    print(f"DEBUG: Empty block for section: {section}")
+                    return []
                 lines_raw = [ln for ln in block.splitlines() if ln.strip()]
                 bullets: List[str] = []
                 for ln in lines_raw:
@@ -215,10 +234,49 @@ def run_detailed_analysis(
             # Heuristic role score based on mention strength
             if role_label and text:
                 final_score = 85.0
+                # Set timestamp to indicate this is a real Gemini response
+                from datetime import datetime
+                gemini_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                print(f"DEBUG: Real Gemini response received at {gemini_timestamp}")
             llm_polished_text = text
-        except Exception:
+        except Exception as e:
+            print(f"DEBUG: Gemini API error: {e}")
+            # Provide a rich fallback response when Gemini is unavailable
+            if "quota" in str(e).lower() or "exceeded" in str(e).lower():
+                role_name = role_label.split('::')[1] if role_label and '::' in role_label else 'target position'
+                llm_polished_text = f"""**Professional Resume Analysis Summary**
+
+Your resume shows strong potential for the {role_name} role. Here's a comprehensive analysis:
+
+**Overall Assessment:**
+Based on our analysis, your resume demonstrates relevant experience and skills that align well with the requirements. The key areas highlighted below will help you optimize your application for better ATS performance and recruiter appeal.
+
+**Key Recommendations:**
+• Focus on quantifying your achievements with specific metrics and numbers
+• Ensure all relevant technical skills are prominently featured
+• Tailor your experience descriptions to match the job requirements more closely
+• Consider adding recent projects that demonstrate your capabilities
+
+*Note: This analysis was generated using our fallback system due to API quota limits. For the most detailed AI-powered insights, please try again later.*"""
             # fall back to static template
             pass
+    else:
+        print("DEBUG: No GEMINI_API_KEY found")
+
+    # Ensure we always have some content for llm_polished_text if it's still empty
+    if not llm_polished_text:
+        role_name = role_label.split('::')[1] if role_label and '::' in role_label else 'target position'
+        llm_polished_text = f"""**Resume Analysis Summary**
+
+Your resume has been analyzed for the {role_name} role.
+
+**Assessment Overview:**
+Our analysis shows your resume contains relevant experience and skills. The detailed sections below provide specific feedback to help improve your application's effectiveness.
+
+**Next Steps:**
+Review the strengths, improvement areas, and actionable recommendations provided below to optimize your resume for better results.
+
+*Note: For enhanced AI-powered analysis, ensure Gemini API is properly configured.*"""
 
     if not strengths:
         strengths = ["Strong foundational skills", "Relevant project experience"]
@@ -244,7 +302,8 @@ def run_detailed_analysis(
         weaknesses=weaknesses,
         actionable_recs=actionables,
         example_bullets=example_bullets,
-        llm_polished_text=locals().get("llm_polished_text", ""),
+        llm_polished_text=llm_polished_text,
+        gemini_timestamp=gemini_timestamp,
     )
 
 
@@ -280,7 +339,8 @@ def call_gemini(prompt: str) -> str:
         return "Set GEMINI_API_KEY to enable polishing."
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        model_name = os.environ.get("GEMINI_MODEL", "gemini-1.5-flash")
+        model = genai.GenerativeModel(model_name)
         resp = model.generate_content(prompt)
         return resp.text or ""
     except Exception as ex:

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
+from datetime import datetime
 
 
 class DetailedChoice(BaseModel):
@@ -23,6 +24,7 @@ class DetailedAnalysisResponse(BaseModel):
     actionable_recs: List[str]
     example_bullets: List[str]
     llm_polished_text: str
+    gemini_timestamp: Optional[str] = None  # Only set when response is from Gemini
 
 
 class GeminiPolishRequest(BaseModel):

@@ -471,7 +471,17 @@ export default function Results({ data, onRestart }) {
             
             {detail.llm_polished_text && (
               <div className="mb-8 p-4 bg-gray-700 bg-opacity-50 rounded-lg">
-                <h4 className="text-lg font-semibold text-white mb-3">AI-Generated Summary</h4>
+                <div className="flex justify-between items-center mb-3">
+                  <h4 className="text-lg font-semibold text-white">AI-Generated Summary</h4>
+                  {detail.gemini_timestamp && (
+                    <div className="flex items-center gap-2 text-green-400 text-sm">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>Generated: {detail.gemini_timestamp}</span>
+                    </div>
+                  )}
+                </div>
                 <div className="text-gray-300 whitespace-pre-wrap leading-relaxed">
                   {detail.llm_polished_text}
                 </div>
