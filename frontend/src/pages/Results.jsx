@@ -1,6 +1,6 @@
 import MatchResults from '../components/MatchResults';
 import Suggestions from '../components/Suggestions';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { api } from '../services/api';
 
 // ATS Score Circle Component
@@ -81,6 +81,7 @@ function ATSScoreCircle({ score }) {
 function DetailedAnalysisLoader({ isVisible, onComplete }) {
   const [currentStep, setCurrentStep] = useState(-1);
   const [completedSteps, setCompletedSteps] = useState(new Set());
+  const [progress, setProgress] = useState(0);
   
   const steps = [
     "Please wait...",
@@ -97,6 +98,7 @@ function DetailedAnalysisLoader({ isVisible, onComplete }) {
     if (!isVisible) {
       setCurrentStep(-1);
       setCompletedSteps(new Set());
+      setProgress(0);
       return;
     }
     
@@ -104,6 +106,10 @@ function DetailedAnalysisLoader({ isVisible, onComplete }) {
     const interval = setInterval(() => {
       if (stepIndex < steps.length) {
         setCurrentStep(stepIndex);
+        
+        // Update progress bar to always move forward
+        const newProgress = ((stepIndex + 1) / steps.length) * 100;
+        setProgress(prevProgress => Math.max(prevProgress, newProgress));
         
         // Mark previous step as completed after a delay
         if (stepIndex > 0) {
@@ -115,6 +121,7 @@ function DetailedAnalysisLoader({ isVisible, onComplete }) {
         stepIndex++;
       } else {
         // Mark last step as completed and finish
+        setProgress(100);
         setTimeout(() => {
           setCompletedSteps(prev => new Set([...prev, steps.length - 1]));
           setTimeout(() => {
@@ -205,12 +212,12 @@ function DetailedAnalysisLoader({ isVisible, onComplete }) {
         <div className="mt-8">
           <div className="flex justify-between text-sm text-gray-400 mb-2">
             <span>Progress</span>
-            <span>{Math.round(((currentStep + 1) / steps.length) * 100)}%</span>
+            <span>{Math.round(progress)}%</span>
           </div>
           <div className="w-full bg-gray-700 rounded-full h-2">
             <div 
               className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full transition-all duration-500 ease-out"
-              style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
+              style={{ width: `${progress}%` }}
             ></div>
           </div>
         </div>
@@ -224,6 +231,8 @@ export default function Results({ data, onRestart }) {
   const [loading, setLoading] = useState(false);
   const [loadingRoleKey, setLoadingRoleKey] = useState('');
   const [showDetailedLoader, setShowDetailedLoader] = useState(false);
+  const [selectedRole, setSelectedRole] = useState(null);
+  const detailAnalysisRef = useRef(null);
   
   if (!data) return null;
 
@@ -231,6 +240,7 @@ export default function Results({ data, onRestart }) {
     const key = `${r.category}-${r.role}`;
     setLoadingRoleKey(key);
     setShowDetailedLoader(true);
+    setSelectedRole(r); // Store the selected role
     
     // This will be triggered when the loading animation completes
     const performAnalysis = async () => {
@@ -238,6 +248,16 @@ export default function Results({ data, onRestart }) {
       try {
         const res = await api.getDetailedAnalysis({ resume_id: data.resume_id, category: r.category, role: r.role });
         setDetail(res);
+        
+        // Auto-scroll to detailed analysis section after a short delay
+        setTimeout(() => {
+          if (detailAnalysisRef.current) {
+            detailAnalysisRef.current.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'start' 
+            });
+          }
+        }, 500);
       } finally {
         setLoading(false);
         setLoadingRoleKey('');
@@ -301,9 +321,11 @@ export default function Results({ data, onRestart }) {
 
         {/* Detailed Analysis */}
         {detail && (
-          <div className="bg-gray-800 bg-opacity-60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-xl border border-gray-700">
+          <div ref={detailAnalysisRef} className="bg-gray-800 bg-opacity-60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-xl border border-gray-700">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-bold text-white">Detailed Analysis</h3>
+              <h3 className="text-2xl font-bold text-white">
+                Detailed Analysis for {selectedRole ? selectedRole.role : 'Selected Role'}
+              </h3>
               {loading && (
                 <div className="flex items-center gap-2 text-gray-300">
                   <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
