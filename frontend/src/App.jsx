@@ -18,9 +18,7 @@ export default function App() {
         </div>
       )}
       {route === 'results' && (
-        <div className="min-h-screen bg-gray-50 text-gray-900">
-          <Results data={analysisData} onRestart={() => setRoute('analysis')} />
-        </div>
+        <Results data={analysisData} onRestart={() => setRoute('analysis')} />
       )}
     </div>
   )
