@@ -3,6 +3,80 @@ import Suggestions from '../components/Suggestions';
 import { useState } from 'react';
 import { api } from '../services/api';
 
+// ATS Score Circle Component
+function ATSScoreCircle({ score }) {
+  const radius = 90;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDasharray = circumference;
+  const strokeDashoffset = circumference - (score / 100) * circumference;
+  
+  // Determine color based on score
+  const getScoreColor = (score) => {
+    if (score >= 80) return { primary: '#10B981', secondary: '#34D399', bg: '#065F46' }; // Green
+    if (score >= 60) return { primary: '#F59E0B', secondary: '#FBBF24', bg: '#92400E' }; // Yellow
+    if (score >= 40) return { primary: '#EF4444', secondary: '#F87171', bg: '#991B1B' }; // Red
+    return { primary: '#6B7280', secondary: '#9CA3AF', bg: '#374151' }; // Gray
+  };
+  
+  const colors = getScoreColor(score);
+  
+  return (
+    <div className="relative">
+      <h2 className="text-2xl font-bold text-white mb-6 text-center">ATS Match Rate</h2>
+      <div className="relative w-64 h-64 mx-auto">
+        {/* Background circle */}
+        <svg className="w-64 h-64 transform -rotate-90" viewBox="0 0 200 200">
+          <circle
+            cx="100"
+            cy="100"
+            r={radius}
+            stroke="#374151"
+            strokeWidth="12"
+            fill="none"
+          />
+          {/* Progress circle */}
+          <circle
+            cx="100"
+            cy="100"
+            r={radius}
+            stroke={colors.primary}
+            strokeWidth="12"
+            fill="none"
+            strokeDasharray={strokeDasharray}
+            strokeDashoffset={strokeDashoffset}
+            strokeLinecap="round"
+            className="transition-all duration-1000 ease-out"
+            style={{
+              filter: `drop-shadow(0 0 8px ${colors.secondary})`,
+            }}
+          />
+        </svg>
+        
+        {/* Score text */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center">
+            <div className="text-5xl font-bold text-white mb-1">
+              {Math.round(score)}
+              <span className="text-3xl text-gray-300">%</span>
+            </div>
+            <div className="text-gray-400 text-sm font-medium">
+              {score >= 80 ? 'Excellent' : score >= 60 ? 'Good' : score >= 40 ? 'Fair' : 'Needs Work'}
+            </div>
+          </div>
+        </div>
+        
+        {/* Glow effect */}
+        <div 
+          className="absolute inset-0 rounded-full opacity-20 blur-xl"
+          style={{
+            background: `radial-gradient(circle, ${colors.secondary} 0%, transparent 70%)`,
+          }}
+        ></div>
+      </div>
+    </div>
+  );
+}
+
 export default function Results({ data, onRestart }) {
   const [detail, setDetail] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -22,44 +96,141 @@ export default function Results({ data, onRestart }) {
     }
   }
   return (
-    <div className="section">
-      <div className="flex justify-between items-center container-page">
-        <h2 className="text-2xl font-semibold">Results</h2>
-        <button className="btn-secondary" onClick={onRestart}>Run Again</button>
-      </div>
-      <div className="grid gap-6 container-page">
-        <MatchResults topRoles={data.top_roles} ats={data.ats_score} onSelectRole={handleSelectRole} loadingRoleKey={loadingRoleKey} />
-        <Suggestions shortText={data.suggestions_short} skills={data.extracted_skills} missing={data.missing_skills_union} />
+    <div className="min-h-screen bg-dark-blue">
+      {/* Header */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex justify-between items-center mb-8">
+          {/* AI-Powered Tag */}
+          <div className="inline-flex items-center gap-2 bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">
+            <svg className="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            </svg>
+            Analysis Complete
+          </div>
+          <button 
+            className="bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-600 transition-colors flex items-center gap-2"
+            onClick={onRestart}
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Run Again
+          </button>
+        </div>
+
+        {/* ATS Score Circle */}
+        <div className="text-center mb-12">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-8">Your Resume Analysis</h1>
+          <div className="flex justify-center">
+            <ATSScoreCircle score={data.ats_score} />
+          </div>
+        </div>
+
+        {/* Top Role Matches */}
+        <div className="mb-12">
+          <MatchResults topRoles={data.top_roles} ats={data.ats_score} onSelectRole={handleSelectRole} loadingRoleKey={loadingRoleKey} />
+        </div>
+
+        {/* Suggestions */}
+        <div className="mb-8">
+          <Suggestions shortText={data.suggestions_short} skills={data.extracted_skills} missing={data.missing_skills_union} />
+        </div>
+
+        {/* Detailed Analysis */}
         {detail && (
-          <div className="card">
-            <div className="card-body">
-            <div className="flex justify-between items-center mb-2">
-              <h3 className="text-lg font-medium">Detailed Analysis</h3>
-              {loading && <span className="text-sm text-gray-500">Loading...</span>}
+          <div className="bg-gray-800 bg-opacity-60 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-xl border border-gray-700">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold text-white">Detailed Analysis</h3>
+              {loading && (
+                <div className="flex items-center gap-2 text-gray-300">
+                  <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Loading...
+                </div>
+              )}
             </div>
+            
             {detail.llm_polished_text && (
-              <div className="prose max-w-none mb-4 whitespace-pre-wrap text-sm text-gray-800">
-                {detail.llm_polished_text}
+              <div className="mb-8 p-4 bg-gray-700 bg-opacity-50 rounded-lg">
+                <h4 className="text-lg font-semibold text-white mb-3">AI-Generated Summary</h4>
+                <div className="text-gray-300 whitespace-pre-wrap leading-relaxed">
+                  {detail.llm_polished_text}
+                </div>
               </div>
             )}
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <div className="font-semibold mb-1">Strengths</div>
-                <ul className="list-disc list-inside text-sm text-gray-800">{(detail.strengths||[]).map((s,i)=>(<li key={i}>{s}</li>))}</ul>
+            
+            <div className="grid md:grid-cols-2 gap-8 mb-8">
+              <div className="bg-green-900 bg-opacity-30 rounded-lg p-6 border border-green-700">
+                <div className="flex items-center gap-2 mb-4">
+                  <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                  <h4 className="text-lg font-semibold text-green-300">Strengths</h4>
+                </div>
+                <ul className="space-y-2">
+                  {(detail.strengths||[]).map((s,i)=>(
+                    <li key={i} className="text-gray-300 flex items-start gap-2">
+                      <span className="text-green-400 mt-1.5 flex-shrink-0">•</span>
+                      <span>{s}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div>
-                <div className="font-semibold mb-1">Weaknesses</div>
-                <ul className="list-disc list-inside text-sm text-gray-800">{(detail.weaknesses||[]).map((s,i)=>(<li key={i}>{s}</li>))}</ul>
+              
+              <div className="bg-orange-900 bg-opacity-30 rounded-lg p-6 border border-orange-700">
+                <div className="flex items-center gap-2 mb-4">
+                  <svg className="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 15.5c-.77.833.192 2.5 1.732 2.5z" />
+                  </svg>
+                  <h4 className="text-lg font-semibold text-orange-300">Areas for Improvement</h4>
+                </div>
+                <ul className="space-y-2">
+                  {(detail.weaknesses||[]).map((s,i)=>(
+                    <li key={i} className="text-gray-300 flex items-start gap-2">
+                      <span className="text-orange-400 mt-1.5 flex-shrink-0">•</span>
+                      <span>{s}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-            <div className="mt-4">
-              <div className="font-semibold mb-1">Actionable Recommendations</div>
-              <ul className="list-disc list-inside text-sm text-gray-800">{(detail.actionable_recs||[]).map((s,i)=>(<li key={i}>{s}</li>))}</ul>
-            </div>
-            <div className="mt-4">
-              <div className="font-semibold mb-1">Example Bullets</div>
-              <ul className="list-disc list-inside text-sm text-gray-800">{(detail.example_bullets||[]).map((s,i)=>(<li key={i}>{s}</li>))}</ul>
-            </div>
+            
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="bg-blue-900 bg-opacity-30 rounded-lg p-6 border border-blue-700">
+                <div className="flex items-center gap-2 mb-4">
+                  <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                  </svg>
+                  <h4 className="text-lg font-semibold text-blue-300">Actionable Recommendations</h4>
+                </div>
+                <ul className="space-y-2">
+                  {(detail.actionable_recs||[]).map((s,i)=>(
+                    <li key={i} className="text-gray-300 flex items-start gap-2">
+                      <span className="text-blue-400 mt-1.5 flex-shrink-0">•</span>
+                      <span>{s}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div className="bg-purple-900 bg-opacity-30 rounded-lg p-6 border border-purple-700">
+                <div className="flex items-center gap-2 mb-4">
+                  <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                  <h4 className="text-lg font-semibold text-purple-300">Example Bullets</h4>
+                </div>
+                <ul className="space-y-2">
+                  {(detail.example_bullets||[]).map((s,i)=>(
+                    <li key={i} className="text-gray-300 flex items-start gap-2">
+                      <span className="text-purple-400 mt-1.5 flex-shrink-0">•</span>
+                      <span>{s}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         )}
