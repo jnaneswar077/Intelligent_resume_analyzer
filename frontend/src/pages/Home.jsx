@@ -1,4 +1,16 @@
+import { useEffect, useState } from 'react';
+
 export default function Home({ onStart }) {
+  const rotatingWords = ['impactful', 'faster', 'successful', 'brighter'];
+  const [wordIndex, setWordIndex] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setWordIndex((prev) => (prev + 1) % rotatingWords.length);
+    }, 3000);
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
       {/* Left Content Section */}
@@ -14,8 +26,17 @@ export default function Home({ onStart }) {
 
           {/* Main Heading */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight">
-            Let AI make your career 10x{' '}
-            <span className="bg-gray-800 bg-opacity-60 px-2 sm:px-3 py-1 rounded-lg">successful</span>
+            <span className="block">Let AI make</span>
+            <span className="block">your career</span>
+            <span className="block">
+              10x{' '}
+              <span
+                key={rotatingWords[wordIndex]}
+                className="inline-block bg-gray-800 bg-opacity-60 px-2 sm:px-3 py-1 rounded-lg transition-opacity duration-500"
+              >
+                {rotatingWords[wordIndex]}
+              </span>
+            </span>
           </h1>
 
           {/* Description */}
@@ -65,7 +86,7 @@ export default function Home({ onStart }) {
       </div>
 
       {/* Right Video Section */}
-      <div className="flex-1 relative overflow-hidden h-64 sm:h-80 lg:h-auto">
+      <div className="flex-1 relative overflow-hidden h-64 sm:h-80 lg:h-auto rounded-2xl">
         <video 
           className="w-full h-full object-cover"
           autoPlay 
@@ -73,7 +94,7 @@ export default function Home({ onStart }) {
           loop 
           playsInline
         >
-          <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+          <source src="/videos/hero.mp4" type="video/mp4" />
           {/* Fallback image if video doesn't load */}
           <div className="w-full h-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center">
             <div className="text-white text-center px-4">
