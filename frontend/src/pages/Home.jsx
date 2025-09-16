@@ -86,30 +86,33 @@ export default function Home({ onStart }) {
       </div>
 
       {/* Right Video Section */}
-      <div className="flex-1 relative overflow-hidden h-64 sm:h-80 lg:h-auto rounded-2xl">
-        <video 
-          className="w-full h-full object-cover"
-          autoPlay 
-          muted 
-          loop 
-          playsInline
-        >
-          <source src="/videos/hero.mp4" type="video/mp4" />
-          {/* Fallback image if video doesn't load */}
-          <div className="w-full h-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center">
-            <div className="text-white text-center px-4">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
+      <div className="flex-1 relative h-64 sm:h-80 lg:h-auto bg-dark-blue">
+        {/* Inset container to create margins on top/bottom/right while keeping left flush */}
+        <div className="absolute left-0 right-4 top-4 bottom-4 lg:right-8 lg:top-8 lg:bottom-8 overflow-hidden rounded-2xl shadow-xl">
+          <video 
+            className="w-full h-full object-cover"
+            autoPlay 
+            muted 
+            loop 
+            playsInline
+          >
+            <source src="/videos/hero.mp4" type="video/mp4" />
+            {/* Fallback image if video doesn't load */}
+            <div className="w-full h-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center">
+              <div className="text-white text-center px-4">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                  <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
+                <p className="text-xs sm:text-sm opacity-75">Scroll to explore</p>
               </div>
-              <p className="text-xs sm:text-sm opacity-75">Scroll to explore</p>
             </div>
-          </div>
-        </video>
-        
+          </video>
+        </div>
+
         {/* Overlay text - hidden on mobile */}
-        <div className="absolute bottom-4 right-4 text-white text-sm opacity-75 hidden sm:block">
+        <div className="absolute bottom-6 right-6 lg:bottom-10 lg:right-10 text-white text-sm opacity-75 hidden sm:block">
           Scroll to explore
         </div>
       </div>
