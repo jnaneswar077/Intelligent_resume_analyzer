@@ -78,10 +78,12 @@ function ATSScoreCircle({ score }) {
 }
 
 // Step-by-step loading animation component
-function DetailedAnalysisLoader({ isVisible, onComplete }) {
+function DetailedAnalysisLoader({ isVisible, onComplete, apiCompleted = false }) {
   const [currentStep, setCurrentStep] = useState(-1);
   const [completedSteps, setCompletedSteps] = useState(new Set());
   const [progress, setProgress] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+  const [showWaitingForAPI, setShowWaitingForAPI] = useState(false);
   
   const steps = [
     "Please wait...",
@@ -96,16 +98,30 @@ function DetailedAnalysisLoader({ isVisible, onComplete }) {
   
   useEffect(() => {
     if (!isVisible) {
+      // Reset all state when loader becomes invisible
       setCurrentStep(-1);
       setCompletedSteps(new Set());
       setProgress(0);
+      setShowWaitingForAPI(false);
+      setHasStarted(false);
       return;
     }
     
-    let stepIndex = 0;
+    // If becoming visible and we haven't started, reset everything
+    if (isVisible && !hasStarted) {
+      setCurrentStep(-1);
+      setCompletedSteps(new Set());
+      setProgress(0);
+      setShowWaitingForAPI(false);
+    }
+    
+    // Mark that we've started the animation
+    setHasStarted(true);
+    
+    let stepIndex = 0; // Always start from step 0 for new animations
     const interval = setInterval(() => {
       if (stepIndex < steps.length) {
-        setCurrentStep(stepIndex);
+        setCurrentStep(prevStep => Math.max(prevStep, stepIndex));
         
         // Update progress bar to always move forward
         const newProgress = ((stepIndex + 1) / steps.length) * 100;
@@ -114,18 +130,31 @@ function DetailedAnalysisLoader({ isVisible, onComplete }) {
         // Mark previous step as completed after a delay
         if (stepIndex > 0) {
           setTimeout(() => {
-            setCompletedSteps(prev => new Set([...prev, stepIndex - 1]));
+            setCompletedSteps(prev => {
+              const newSet = new Set(prev);
+              newSet.add(stepIndex - 1);
+              return newSet;
+            });
           }, 800);
         }
         
         stepIndex++;
       } else {
-        // Mark last step as completed and finish
+        // Mark last step as completed
         setProgress(100);
         setTimeout(() => {
-          setCompletedSteps(prev => new Set([...prev, steps.length - 1]));
+          setCompletedSteps(prev => {
+            const newSet = new Set(prev);
+            newSet.add(steps.length - 1);
+            return newSet;
+          });
+          // After all steps complete, show waiting for API if not done yet
           setTimeout(() => {
-            onComplete();
+            if (!apiCompleted) {
+              setShowWaitingForAPI(true);
+            } else {
+              onComplete();
+            }
           }, 1000);
         }, 800);
         clearInterval(interval);
@@ -133,7 +162,14 @@ function DetailedAnalysisLoader({ isVisible, onComplete }) {
     }, 1200);
     
     return () => clearInterval(interval);
-  }, [isVisible, onComplete]);
+  }, [isVisible, hasStarted, currentStep, apiCompleted, onComplete]);
+  
+  // If API completes while we're showing waiting state, hide immediately
+  useEffect(() => {
+    if (apiCompleted && showWaitingForAPI) {
+      onComplete();
+    }
+  }, [apiCompleted, showWaitingForAPI, onComplete]);
   
   if (!isVisible) return null;
   
@@ -151,76 +187,114 @@ function DetailedAnalysisLoader({ isVisible, onComplete }) {
           <p className="text-gray-400">Our AI is performing a comprehensive analysis</p>
         </div>
         
-        <div className="space-y-4">
-          {steps.map((step, index) => {
-            const isCompleted = completedSteps.has(index);
-            const isCurrent = currentStep === index;
-            const isVisible = index <= currentStep;
-            
-            return (
-              <div 
-                key={index}
-                className={`flex items-center gap-4 transition-all duration-500 ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                }`}
-                style={{
-                  transitionDelay: `${index * 100}ms`
-                }}
-              >
-                {/* Status Icon */}
-                <div className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-500 ${
-                  isCompleted 
-                    ? 'bg-green-500 border-green-500 scale-110' 
-                    : isCurrent 
-                    ? 'border-purple-500 bg-purple-500 bg-opacity-20' 
-                    : 'border-gray-600 bg-gray-700'
-                }`}>
-                  {isCompleted ? (
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  ) : isCurrent ? (
-                    <div className="w-3 h-3 bg-purple-400 rounded-full animate-pulse"></div>
-                  ) : (
-                    <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
-                  )}
-                </div>
-                
-                {/* Step Text */}
-                <div className={`text-lg font-medium transition-all duration-500 ${
-                  isCompleted 
-                    ? 'text-green-300' 
-                    : isCurrent 
-                    ? 'text-white' 
-                    : 'text-gray-500'
-                }`}>
-                  {step}
-                  {isCurrent && (
-                    <span className="ml-2 inline-flex">
-                      <span className="animate-bounce">.</span>
-                      <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>.</span>
-                      <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>.</span>
-                    </span>
-                  )}
-                </div>
+        {showWaitingForAPI ? (
+          /* Waiting for API Response State */
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <svg className="animate-spin w-8 h-8 text-purple-400" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <div className="text-xl font-medium text-white">
+                Preparing your resume review, just a second
+                <span className="ml-1 inline-flex">
+                  <span className="animate-bounce">.</span>
+                  <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>.</span>
+                  <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>.</span>
+                </span>
               </div>
-            );
-          })}
-        </div>
-        
-        {/* Progress Bar */}
-        <div className="mt-8">
-          <div className="flex justify-between text-sm text-gray-400 mb-2">
-            <span>Progress</span>
-            <span>{Math.round(progress)}%</span>
+            </div>
+            <p className="text-gray-400 mb-8">Our AI is finalizing the detailed analysis...</p>
+            
+            {/* Keep the progress bar at 100% */}
+            <div className="mt-8">
+              <div className="flex justify-between text-sm text-gray-400 mb-2">
+                <span>Progress</span>
+                <span>100%</span>
+              </div>
+              <div className="w-full bg-gray-700 rounded-full h-2">
+                <div 
+                  className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full transition-all duration-500 ease-out"
+                  style={{ width: '100%' }}
+                ></div>
+              </div>
+            </div>
           </div>
-          <div className="w-full bg-gray-700 rounded-full h-2">
-            <div 
-              className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full transition-all duration-500 ease-out"
-              style={{ width: `${progress}%` }}
-            ></div>
-          </div>
-        </div>
+        ) : (
+          /* Step-by-step Progress State */
+          <>
+            <div className="space-y-4">
+              {steps.map((step, index) => {
+                const isCompleted = completedSteps.has(index);
+                const isCurrent = currentStep === index;
+                const isVisible = index <= currentStep;
+                
+                return (
+                  <div 
+                    key={index}
+                    className={`flex items-center gap-4 transition-all duration-500 ${
+                      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                    }`}
+                    style={{
+                      transitionDelay: `${index * 100}ms`
+                    }}
+                  >
+                    {/* Status Icon */}
+                    <div className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-500 ${
+                      isCompleted 
+                        ? 'bg-green-500 border-green-500 scale-110' 
+                        : isCurrent 
+                        ? 'border-purple-500 bg-purple-500 bg-opacity-20' 
+                        : 'border-gray-600 bg-gray-700'
+                    }`}>
+                      {isCompleted ? (
+                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      ) : isCurrent ? (
+                        <div className="w-3 h-3 bg-purple-400 rounded-full animate-pulse"></div>
+                      ) : (
+                        <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
+                      )}
+                    </div>
+                    
+                    {/* Step Text */}
+                    <div className={`text-lg font-medium transition-all duration-500 ${
+                      isCompleted 
+                        ? 'text-green-300' 
+                        : isCurrent 
+                        ? 'text-white' 
+                        : 'text-gray-500'
+                    }`}>
+                      {step}
+                      {isCurrent && (
+                        <span className="ml-2 inline-flex">
+                          <span className="animate-bounce">.</span>
+                          <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>.</span>
+                          <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>.</span>
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            
+            {/* Progress Bar */}
+            <div className="mt-8">
+              <div className="flex justify-between text-sm text-gray-400 mb-2">
+                <span>Progress</span>
+                <span>{Math.round(progress)}%</span>
+              </div>
+              <div className="w-full bg-gray-700 rounded-full h-2">
+                <div 
+                  className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full transition-all duration-500 ease-out"
+                  style={{ width: `${progress}%` }}
+                ></div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
@@ -232,6 +306,7 @@ export default function Results({ data, onRestart }) {
   const [loadingRoleKey, setLoadingRoleKey] = useState('');
   const [showDetailedLoader, setShowDetailedLoader] = useState(false);
   const [selectedRole, setSelectedRole] = useState(null);
+  const [apiCompleted, setApiCompleted] = useState(false);
   const detailAnalysisRef = useRef(null);
   
   if (!data) return null;
@@ -241,12 +316,18 @@ export default function Results({ data, onRestart }) {
     setLoadingRoleKey(key);
     setShowDetailedLoader(true);
     setSelectedRole(r); // Store the selected role
+    setApiCompleted(false); // Reset API completion status
     
     // This will be triggered when the loading animation completes
     const performAnalysis = async () => {
       setLoading(true);
       try {
         const res = await api.getDetailedAnalysis({ resume_id: data.resume_id, category: r.category, role: r.role });
+        
+        // Mark API as completed
+        setApiCompleted(true);
+        // Immediately hide the loading animation when results arrive
+        setShowDetailedLoader(false);
         setDetail(res);
         
         // Auto-scroll to detailed analysis section after a short delay
@@ -257,15 +338,15 @@ export default function Results({ data, onRestart }) {
               block: 'start' 
             });
           }
-        }, 500);
+        }, 300);
       } finally {
         setLoading(false);
         setLoadingRoleKey('');
       }
     };
     
-    // Start the actual API call after the loading animation
-    setTimeout(performAnalysis, 100);
+    // Start the actual API call immediately (not after animation)
+    performAnalysis();
   }
   
   const handleLoaderComplete = () => {
@@ -276,8 +357,10 @@ export default function Results({ data, onRestart }) {
     <div className="min-h-screen bg-dark-blue">
       {/* Detailed Analysis Loader Overlay */}
       <DetailedAnalysisLoader 
+        key={selectedRole ? `${selectedRole.category}-${selectedRole.role}` : 'default'}
         isVisible={showDetailedLoader} 
         onComplete={handleLoaderComplete}
+        apiCompleted={apiCompleted}
       />
       
       {/* Header */}

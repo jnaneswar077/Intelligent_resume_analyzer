@@ -126,7 +126,7 @@ def run_detailed_analysis(
 ) -> DetailedAnalysisResponse:
     # Choice can be {type: "JD"} or {type: "ROLE", category, role}
     role_label = None
-    if isinstance(choice, dict) and choice.get("type") and choice.get("type").upper() == "ROLE":
+    if isinstance(choice, dict) and choice.get("type") and choice.get("type", "").upper() == "ROLE":
         category = choice.get("category")
         role = choice.get("role")
         if category and role:
