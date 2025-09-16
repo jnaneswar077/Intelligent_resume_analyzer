@@ -135,7 +135,7 @@ function DetailedAnalysisLoader({ isVisible, onComplete, apiCompleted = false })
               newSet.add(stepIndex - 1);
               return newSet;
             });
-          }, 800);
+          }, 400); // Faster completion timing
         }
         
         stepIndex++;
@@ -155,11 +155,11 @@ function DetailedAnalysisLoader({ isVisible, onComplete, apiCompleted = false })
             } else {
               onComplete();
             }
-          }, 1000);
-        }, 800);
+          }, 500);
+        }, 400);
         clearInterval(interval);
       }
-    }, 1200);
+    }, 600); // Faster timing: 600ms instead of 1200ms
     
     return () => clearInterval(interval);
   }, [isVisible, hasStarted, currentStep, apiCompleted, onComplete]);
@@ -223,28 +223,70 @@ function DetailedAnalysisLoader({ isVisible, onComplete, apiCompleted = false })
         ) : (
           /* Step-by-step Progress State */
           <>
-            <div className="space-y-4">
+            <div className="relative h-40 overflow-hidden flex flex-col items-center justify-center">
               {steps.map((step, index) => {
                 const isCompleted = completedSteps.has(index);
                 const isCurrent = currentStep === index;
-                const isVisible = index <= currentStep;
+                const isNext = index === currentStep + 1;
+                const isVisible = index <= currentStep + 1; // Show current and next
+                
+                // Calculate position relative to current step
+                const positionFromCurrent = index - currentStep;
+                
+                let opacity = 0;
+                let translateY = 0;
+                let scale = 0.8;
+                
+                if (positionFromCurrent < -2) {
+                  // Steps that are far in the past: completely hidden
+                  opacity = 0;
+                  translateY = -100;
+                } else if (positionFromCurrent === -2) {
+                  // Two steps back: fading out upward
+                  opacity = 0.2;
+                  translateY = -80;
+                  scale = 0.7;
+                } else if (positionFromCurrent === -1) {
+                  // Previous step: moving up
+                  opacity = 0.4;
+                  translateY = -60;
+                  scale = 0.8;
+                } else if (positionFromCurrent === 0) {
+                  // Current step: center, bright
+                  opacity = 1;
+                  translateY = 0;
+                  scale = 1;
+                } else if (positionFromCurrent === 1) {
+                  // Next step: below center, transparent preview
+                  opacity = 0.3;
+                  translateY = 60;
+                  scale = 0.9;
+                } else {
+                  // Future steps: hidden
+                  opacity = 0;
+                  translateY = 100;
+                }
                 
                 return (
                   <div 
                     key={index}
-                    className={`flex items-center gap-4 transition-all duration-500 ${
-                      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                    className={`absolute flex items-center gap-4 transition-all duration-700 ease-in-out w-full max-w-md ${
+                      isVisible ? 'pointer-events-auto' : 'pointer-events-none'
                     }`}
                     style={{
-                      transitionDelay: `${index * 100}ms`
+                      opacity: isVisible ? opacity : 0,
+                      transform: `translateY(${translateY}px) scale(${scale})`,
+                      zIndex: positionFromCurrent === 0 ? 10 : Math.max(0, 10 + positionFromCurrent)
                     }}
                   >
                     {/* Status Icon */}
                     <div className={`flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-500 ${
                       isCompleted 
-                        ? 'bg-green-500 border-green-500 scale-110' 
+                        ? 'bg-green-500 border-green-500' 
                         : isCurrent 
                         ? 'border-purple-500 bg-purple-500 bg-opacity-20' 
+                        : isNext
+                        ? 'border-gray-500 bg-gray-700 bg-opacity-50'
                         : 'border-gray-600 bg-gray-700'
                     }`}>
                       {isCompleted ? (
@@ -253,17 +295,21 @@ function DetailedAnalysisLoader({ isVisible, onComplete, apiCompleted = false })
                         </svg>
                       ) : isCurrent ? (
                         <div className="w-3 h-3 bg-purple-400 rounded-full animate-pulse"></div>
+                      ) : isNext ? (
+                        <div className="w-2 h-2 bg-gray-400 rounded-full opacity-60"></div>
                       ) : (
                         <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
                       )}
                     </div>
                     
                     {/* Step Text */}
-                    <div className={`text-lg font-medium transition-all duration-500 ${
+                    <div className={`text-lg font-medium transition-all duration-500 text-center ${
                       isCompleted 
                         ? 'text-green-300' 
                         : isCurrent 
-                        ? 'text-white' 
+                        ? 'text-white font-semibold' 
+                        : isNext
+                        ? 'text-gray-400 font-normal'
                         : 'text-gray-500'
                     }`}>
                       {step}
@@ -273,6 +319,9 @@ function DetailedAnalysisLoader({ isVisible, onComplete, apiCompleted = false })
                           <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>.</span>
                           <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>.</span>
                         </span>
+                      )}
+                      {isNext && (
+                        <span className="block text-xs text-gray-500 mt-1">Next</span>
                       )}
                     </div>
                   </div>
