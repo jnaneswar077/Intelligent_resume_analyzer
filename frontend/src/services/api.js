@@ -7,13 +7,8 @@ async function getRoles() {
   return res.data;
 }
 
-async function uploadAndAnalyze({ file, category, selected_role, job_description }) {
-  const form = new FormData();
-  form.append('file', file);
-  form.append('category', category);
-  if (selected_role) form.append('selected_role', selected_role);
-  if (job_description) form.append('job_description', job_description);
-  const res = await axios.post(`${BASE}/upload_and_analyze`, form, {
+async function uploadAndAnalyze(formData) {
+  const res = await axios.post(`${BASE}/upload_and_analyze`, formData, {
     headers: { 'Content-Type': 'multipart/form-data' }
   });
   return res.data;

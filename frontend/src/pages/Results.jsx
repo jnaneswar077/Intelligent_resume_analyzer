@@ -694,7 +694,589 @@ function DetailedAnalysisLoader({ isVisible, onComplete, apiCompleted = false })
   );
 }
 
-export default function Results({ data, onRestart }) {
+// Step Indicator Component
+function StepIndicator({ currentStep, totalSteps = 4 }) {
+  const steps = [
+    { id: 1, label: 'Upload Resume' },
+    { id: 2, label: 'Select Category' },
+    { id: 3, label: 'Add Job Description' },
+    { id: 4, label: 'View Results' }
+  ];
+
+  return (
+    <div className="flex items-center justify-center mb-12">
+      <div className="flex items-center space-x-4">
+        {steps.map((step, index) => {
+          const isCompleted = currentStep > step.id;
+          const isCurrent = currentStep === step.id;
+          const isUpcoming = currentStep < step.id;
+          
+          return (
+            <div key={step.id} className="flex items-center">
+              {/* Step Circle */}
+              <div className={`relative flex items-center justify-center w-12 h-12 rounded-full border-2 transition-all duration-300 ${
+                isCompleted
+                  ? 'bg-blue-500 border-blue-500 text-white'
+                  : isCurrent
+                  ? 'bg-blue-500 border-blue-500 text-white'
+                  : 'bg-gray-700 border-gray-600 text-gray-400'
+              }`}>
+                {isCompleted ? (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                ) : (
+                  <span className="font-semibold">{step.id}</span>
+                )}
+              </div>
+              
+              {/* Step Label */}
+              <div className="ml-3 text-center">
+                <p className={`text-sm font-medium transition-colors duration-300 ${
+                  isCompleted || isCurrent ? 'text-white' : 'text-gray-400'
+                }`}>
+                  {step.label}
+                </p>
+              </div>
+              
+              {/* Connector Line */}
+              {index < steps.length - 1 && (
+                <div className={`ml-6 w-16 h-0.5 transition-colors duration-300 ${
+                  isCompleted ? 'bg-blue-500' : 'bg-gray-600'
+                }`} />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// Step 1: Resume Upload Component
+function Step1ResumeUpload({ onNext, onFileSelect, selectedFile }) {
+  const [dragActive, setDragActive] = useState(false);
+
+  const handleDrag = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      onFileSelect(e.dataTransfer.files[0]);
+    }
+  };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    if (e.target.files && e.target.files[0]) {
+      onFileSelect(e.target.files[0]);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-900 flex flex-col">
+      <div className="max-w-4xl mx-auto px-6 py-8 flex-1">
+        <StepIndicator currentStep={1} />
+        
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-white mb-4">Upload your resume to get started</h1>
+          <p className="text-gray-400">Upload your resume in PDF or DOCX format</p>
+        </div>
+
+        <div className="bg-gray-800 bg-opacity-60 backdrop-blur-sm rounded-2xl p-8 border-2 border-dashed border-blue-400 mb-8">
+          <div 
+            className={`relative rounded-xl border-2 border-dashed transition-all duration-300 p-12 text-center ${
+              dragActive 
+                ? 'border-blue-400 bg-blue-900 bg-opacity-30' 
+                : selectedFile
+                ? 'border-green-400 bg-green-900 bg-opacity-30'
+                : 'border-gray-600 bg-gray-800 bg-opacity-50 hover:border-gray-500'
+            }`}
+            onDragEnter={handleDrag}
+            onDragLeave={handleDrag}
+            onDragOver={handleDrag}
+            onDrop={handleDrop}
+          >
+            <input
+              type="file"
+              accept=".pdf,.docx"
+              onChange={handleChange}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            />
+            
+            {selectedFile ? (
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mb-4">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-2">File Selected Successfully</h3>
+                <p className="text-green-300 mb-4">{selectedFile.name}</p>
+                <p className="text-gray-400 text-sm">Click here to select a different file</p>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mb-4">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-2">
+                  {dragActive ? 'Drop your resume here' : 'Upload your resume'}
+                </h3>
+                <p className="text-gray-400 mb-4">Drag & drop your resume here, or click to browse</p>
+                <p className="text-gray-500 text-sm">as .pdf or .docx file</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="flex justify-center">
+          <button
+            onClick={onNext}
+            disabled={!selectedFile}
+            className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 ${
+              selectedFile
+                ? 'bg-blue-500 hover:bg-blue-600 text-white hover:scale-105'
+                : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+            }`}
+          >
+            Continue to Category Selection
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Step 2: Category Selection Component
+function Step2CategorySelection({ onNext, onPrev, selectedCategory, onCategorySelect, availableRoles }) {
+  const categories = Object.keys(availableRoles || {});
+  
+  return (
+    <div className="min-h-screen bg-gray-900 flex flex-col">
+      <div className="max-w-4xl mx-auto px-6 py-8 flex-1">
+        <StepIndicator currentStep={2} />
+        
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-white mb-4">Select Job Category</h1>
+          <p className="text-gray-400">Choose the category that best matches your target role</p>
+        </div>
+
+        <div className="bg-gray-800 bg-opacity-60 backdrop-blur-sm rounded-2xl p-8 border border-gray-700 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            {categories.map((category) => {
+              const roles = availableRoles[category] || {};
+              const rolesList = Object.keys(roles);
+              
+              return (
+                <div
+                  key={category}
+                  onClick={() => onCategorySelect(category)}
+                  className={`p-6 rounded-xl border-2 cursor-pointer transition-all duration-300 ${
+                    selectedCategory === category
+                      ? 'border-blue-500 bg-blue-900 bg-opacity-30'
+                      : 'border-gray-600 bg-gray-800 bg-opacity-50 hover:border-gray-500 hover:bg-gray-700 hover:bg-opacity-50'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-semibold text-white">{category}</h3>
+                    <div className={`w-6 h-6 rounded-full border-2 transition-colors ${
+                      selectedCategory === category
+                        ? 'bg-blue-500 border-blue-500'
+                        : 'border-gray-400'
+                    }`}>
+                      {selectedCategory === category && (
+                        <svg className="w-4 h-4 text-white m-0.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <p className="text-gray-400 text-sm mb-3">{rolesList.length} available roles:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {rolesList.slice(0, 3).map((role) => (
+                        <span key={role} className="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">
+                          {role}
+                        </span>
+                      ))}
+                      {rolesList.length > 3 && (
+                        <span className="px-3 py-1 bg-gray-700 text-gray-400 rounded-full text-sm">
+                          +{rolesList.length - 3} more
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="flex justify-between">
+          <button
+            onClick={onPrev}
+            className="px-6 py-3 bg-gray-700 text-white rounded-lg font-semibold hover:bg-gray-600 transition-colors"
+          >
+            ← Back
+          </button>
+          <button
+            onClick={onNext}
+            disabled={!selectedCategory}
+            className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 ${
+              selectedCategory
+                ? 'bg-blue-500 hover:bg-blue-600 text-white hover:scale-105'
+                : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+            }`}
+          >
+            Continue to Job Description
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Step 3: Job Description Component
+function Step3JobDescription({ onNext, onPrev, selectedCategory, availableRoles, jobDescription, onJobDescriptionChange, selectedSampleRole, onSampleRoleSelect }) {
+  const roles = selectedCategory ? availableRoles[selectedCategory] || {} : {};
+  const rolesList = Object.keys(roles);
+  const [activeTab, setActiveTab] = useState('paste'); // 'paste' or 'sample'
+  
+  return (
+    <div className="min-h-screen bg-gray-900 flex flex-col">
+      <div className="max-w-6xl mx-auto px-6 py-8 flex-1">
+        <StepIndicator currentStep={3} />
+        
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-white mb-4">Add Job Description</h1>
+          <p className="text-gray-400">Paste a job description or select from sample roles in {selectedCategory}</p>
+        </div>
+
+        <div className="bg-gray-800 bg-opacity-60 backdrop-blur-sm rounded-2xl border border-gray-700 mb-8">
+          {/* Tab Headers */}
+          <div className="flex border-b border-gray-600">
+            <button
+              onClick={() => setActiveTab('paste')}
+              className={`flex-1 py-4 px-6 font-medium transition-colors ${
+                activeTab === 'paste'
+                  ? 'text-white border-b-2 border-blue-500 bg-gray-700 bg-opacity-50'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              PASTE A JOB DESCRIPTION BELOW
+            </button>
+            <div className="w-px bg-gray-600"></div>
+            <button
+              onClick={() => setActiveTab('sample')}
+              className={`flex-1 py-4 px-6 font-medium transition-colors ${
+                activeTab === 'sample'
+                  ? 'text-white border-b-2 border-blue-500 bg-gray-700 bg-opacity-50'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              <span className="text-blue-400">OR</span> USE A SAMPLE JOB DESCRIPTION
+            </button>
+          </div>
+
+          <div className="p-8">
+            {activeTab === 'paste' ? (
+              /* Paste Job Description */
+              <div>
+                <textarea
+                  value={jobDescription}
+                  onChange={(e) => onJobDescriptionChange(e.target.value)}
+                  placeholder="Job Description..."
+                  className="w-full h-80 p-4 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 resize-none focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                />
+              </div>
+            ) : (
+              /* Sample Job Descriptions */
+              <div>
+                <div className="max-h-80 overflow-y-auto space-y-3">
+                  {rolesList.map((role) => {
+                    const roleData = roles[role];
+                    return (
+                      <div
+                        key={role}
+                        onClick={() => onSampleRoleSelect(role)}
+                        className={`p-4 rounded-lg border cursor-pointer transition-all duration-200 ${
+                          selectedSampleRole === role
+                            ? 'border-blue-500 bg-blue-900 bg-opacity-30'
+                            : 'border-gray-600 bg-gray-700 bg-opacity-50 hover:border-gray-500 hover:bg-gray-600 hover:bg-opacity-50'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="text-white font-semibold mb-2">{role}</h4>
+                            <p className="text-gray-400 text-sm mb-2">{roleData.description}</p>
+                            <div className="flex flex-wrap gap-2">
+                              {roleData.skills.slice(0, 5).map((skill) => (
+                                <span key={skill} className="px-2 py-1 bg-gray-600 text-gray-300 rounded text-xs">
+                                  {skill}
+                                </span>
+                              ))}
+                              {roleData.skills.length > 5 && (
+                                <span className="px-2 py-1 bg-gray-600 text-gray-400 rounded text-xs">
+                                  +{roleData.skills.length - 5} more
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <div className={`w-6 h-6 rounded-full border-2 transition-colors flex-shrink-0 ${
+                            selectedSampleRole === role
+                              ? 'bg-blue-500 border-blue-500'
+                              : 'border-gray-400'
+                          }`}>
+                            {selectedSampleRole === role && (
+                              <svg className="w-4 h-4 text-white m-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                              </svg>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="flex justify-between">
+          <button
+            onClick={onPrev}
+            className="px-6 py-3 bg-gray-700 text-white rounded-lg font-semibold hover:bg-gray-600 transition-colors"
+          >
+            ← Back
+          </button>
+          <button
+            onClick={onNext}
+            disabled={!jobDescription && !selectedSampleRole}
+            className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 ${
+              (jobDescription || selectedSampleRole)
+                ? 'bg-blue-500 hover:bg-blue-600 text-white hover:scale-105'
+                : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+            }`}
+          >
+            SCAN
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Step 4: Loading and Results Component
+function Step4LoadingResults({ onRestart, analysisData }) {
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    if (analysisData) {
+      // Simulate some processing time for visual effect
+      const timer = setTimeout(() => setLoading(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [analysisData]);
+  
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex flex-col">
+        <div className="max-w-4xl mx-auto px-6 py-8 flex-1">
+          <StepIndicator currentStep={4} />
+          
+          <div className="bg-gray-800 bg-opacity-60 backdrop-blur-sm rounded-2xl p-12 border border-gray-700 text-center">
+            <div className="flex flex-col items-center">
+              <div className="w-24 h-24 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-8"></div>
+              <h2 className="text-3xl font-bold text-white mb-4">Scanning your resume...</h2>
+              <p className="text-gray-400 mb-8">Loading your results...</p>
+              
+              {/* Progress Bar */}
+              <div className="w-full max-w-md">
+                <div className="bg-gray-700 rounded-full h-2">
+                  <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full animate-pulse" style={{ width: '75%' }}></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  // Show results when loading is complete
+  return (
+    <Results data={analysisData} onRestart={onRestart} />
+  );
+}
+
+// Main Multi-Step Analysis Component
+export default function MultiStepAnalysis({ onRestart }) {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [availableRoles, setAvailableRoles] = useState({});
+  const [jobDescription, setJobDescription] = useState('');
+  const [selectedSampleRole, setSelectedSampleRole] = useState('');
+  const [analysisData, setAnalysisData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  
+  // Load available roles on component mount
+  useEffect(() => {
+    const loadRoles = async () => {
+      try {
+        const roles = await api.getRoles();
+        setAvailableRoles(roles);
+      } catch (error) {
+        console.error('Failed to load roles:', error);
+      }
+    };
+    loadRoles();
+  }, []);
+  
+  const handleFileSelect = (file) => {
+    setSelectedFile(file);
+  };
+  
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+    setSelectedSampleRole(''); // Reset sample role when category changes
+    setJobDescription(''); // Reset job description when category changes
+  };
+  
+  const handleSampleRoleSelect = (role) => {
+    setSelectedSampleRole(role);
+    // When a sample role is selected, clear custom job description
+    setJobDescription('');
+  };
+  
+  const handleJobDescriptionChange = (description) => {
+    setJobDescription(description);
+    // When custom job description is entered, clear sample role selection
+    if (description.trim()) {
+      setSelectedSampleRole('');
+    }
+  };
+  
+  const performAnalysis = async () => {
+    if (!selectedFile || !selectedCategory) return;
+    
+    setLoading(true);
+    setCurrentStep(4);
+    
+    try {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+      formData.append('category', selectedCategory);
+      
+      // Use sample role description or custom job description
+      let finalJobDescription = jobDescription;
+      if (selectedSampleRole && !jobDescription) {
+        const roleData = availableRoles[selectedCategory]?.[selectedSampleRole];
+        finalJobDescription = roleData?.description || '';
+      }
+      
+      if (finalJobDescription) {
+        formData.append('job_description', finalJobDescription);
+      }
+      
+      const result = await api.uploadAndAnalyze(formData);
+      setAnalysisData(result);
+    } catch (error) {
+      console.error('Analysis failed:', error);
+      // TODO: Handle error state
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  const nextStep = () => {
+    if (currentStep < 4) {
+      if (currentStep === 3) {
+        // Trigger analysis when moving to step 4
+        performAnalysis();
+      } else {
+        setCurrentStep(currentStep + 1);
+      }
+    }
+  };
+  
+  const prevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+  
+  const restartAnalysis = () => {
+    setCurrentStep(1);
+    setSelectedFile(null);
+    setSelectedCategory('');
+    setJobDescription('');
+    setSelectedSampleRole('');
+    setAnalysisData(null);
+    onRestart();
+  };
+  
+  switch (currentStep) {
+    case 1:
+      return (
+        <Step1ResumeUpload 
+          onNext={nextStep} 
+          onFileSelect={handleFileSelect}
+          selectedFile={selectedFile}
+        />
+      );
+    case 2:
+      return (
+        <Step2CategorySelection 
+          onNext={nextStep}
+          onPrev={prevStep}
+          selectedCategory={selectedCategory}
+          onCategorySelect={handleCategorySelect}
+          availableRoles={availableRoles}
+        />
+      );
+    case 3:
+      return (
+        <Step3JobDescription 
+          onNext={nextStep}
+          onPrev={prevStep}
+          selectedCategory={selectedCategory}
+          availableRoles={availableRoles}
+          jobDescription={jobDescription}
+          onJobDescriptionChange={handleJobDescriptionChange}
+          selectedSampleRole={selectedSampleRole}
+          onSampleRoleSelect={handleSampleRoleSelect}
+        />
+      );
+    case 4:
+      return (
+        <Step4LoadingResults 
+          onRestart={restartAnalysis}
+          analysisData={analysisData}
+        />
+      );
+    default:
+      return null;
+  }
+}
+
+// Keep the original Results component for the final results display
+export function Results({ data, onRestart }) {
   const [detail, setDetail] = useState(null);
   const [loading, setLoading] = useState(false);
   const [loadingRoleKey, setLoadingRoleKey] = useState('');
