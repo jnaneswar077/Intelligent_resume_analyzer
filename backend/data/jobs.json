@@ -1,180 +1,634 @@
 {
   "Software Development (SDE)": {
     "Software Development Engineer (SDE)": {
-      "description": "Software Development Engineer: Full-stack development, system design, algorithms, data structures, Java/Python/C++, microservices, API development.",
-      "skills": ["Java", "Python", "C++", "System Design", "Algorithms", "Data Structures", "Microservices", "API Development", "Git", "SQL"]
+      "description": "Job Summary: As a Software Development Engineer (SDE), you will design, build, test, and maintain high-quality software applications. You\u2019ll work through the full SDLC, collaborating with cross-functional teams to develop scalable products.\n\nResponsibilities:\n- Gather and analyze user requirements and turn them into technical specs\n- Architect, code, and debug software in Java/Python/C++\n- Design and optimize databases and microservices\n- Write unit and integration tests, conduct code reviews\n- Maintain thorough documentation\n- Collaborate in Agile/Scrum teams\n- Troubleshoot and resolve production issues\n- Stay current with latest technology trends and suggest improvements\n\nRequirements:\n- Bachelor\u2019s in CS/IT or related field\n- 1-3 years of experience preferred\n- Proficiency in Java, Python, or C++\n- Strong understanding of data structures, algorithms, OOP\n- Experience designing REST APIs and microservices\n- Familiarity with Git and CI/CD\n- Excellent problem-solving, communication, and teamwork\n\nPreferred Qualifications:\n- Cloud experience (AWS/Azure/GCP)\n- Exposure to Docker/Kubernetes\n- Contribution to open-source projects\n\nBenefits:\n- Competitive salary (\u20b98\u201320 LPA depending on experience)\n- Flexible/Remote work options\n- Upskilling programs, hackathons, and mentorship\n- Comprehensive health insurance, paid leaves, ESOPs\n\n",
+      "skills": [
+        "Java",
+        "Python",
+        "C++",
+        "REST APIs",
+        "Microservices",
+        "Data Structures",
+        "Algorithms",
+        "System Design",
+        "Git",
+        "CI/CD",
+        "SQL",
+        "Cloud (AWS, Azure)",
+        "Unit Testing",
+        "Agile",
+        "Communication"
+      ]
     },
     "Full-Stack Developer": {
-      "description": "Full-Stack Developer: Frontend and backend development, React/Angular, Node.js, databases, REST APIs, cloud deployment.",
-      "skills": ["React", "Angular", "Node.js", "JavaScript", "HTML", "CSS", "MongoDB", "PostgreSQL", "REST API", "AWS"]
+      "description": "Job Summary: Join our full-stack team to build end-to-end web/mobile apps that delight users. Drive projects from frontend UIs to backend logic and cloud deployments.\n\nResponsibilities:\n- Develop, test, and deliver responsive UIs using React/Angular/Next.js\n- Design RESTful APIs and backend services with Node.js/Express or Python\n- Build and maintain databases (SQL/NoSQL)\n- Implement authentication, authorization, and security best practices\n- Deploy applications to AWS/Azure/cloud; automate with CI/CD\n- Review code and participate in Agile ceremonies\n- Communicate status and blockers proactively\n\nRequirements:\n- Bachelor\u2019s in CS/IT or equivalent experience\n- 1+ years hands-on with JavaScript, React or Angular, Node.js/Python\n- Strong foundation in HTML, CSS, and modern JS frameworks\n- Experience with version control (Git), API design, database integration\n- Good interpersonal and communication abilities\n\nPreferred Qualifications:\n- Experience with TypeScript, Next.js, GraphQL, or containerization (Docker)\n- Familiarity with cloud services and DevOps basics\n\nBenefits:\n- Salary range \u20b96\u201318 LPA\n- Remote work, flexible hours\n- Work with modern tech stack and tools\n- Health insurance, team outings, and L&D\n\n",
+      "skills": [
+        "React",
+        "Angular",
+        "Node.js",
+        "JavaScript",
+        "TypeScript",
+        "Express",
+        "HTML",
+        "CSS",
+        "MongoDB",
+        "PostgreSQL",
+        "REST API",
+        "Next.js",
+        "CI/CD",
+        "AWS/Azure",
+        "Authentication",
+        "Problem Solving"
+      ]
     },
     "Backend Developer": {
-      "description": "Backend Developer: Server-side development, Java/Python, Spring Boot, REST APIs, microservices, Docker, Kubernetes, SQL.",
-      "skills": ["Java", "Python", "Spring Boot", "REST API", "Microservices", "SQL", "Docker", "Kubernetes", "Redis", "MongoDB"]
+      "description": "Job Summary: As a Backend Developer, you will engineer scalable server-side logic and APIs, ensuring reliable performance for end users.\n\nResponsibilities:\n- Architect and build RESTful APIs & microservices using Java/Spring Boot or Python/Node.js\n- Integrate with databases (SQL/NoSQL), cache solutions (Redis)\n- Create scalable, secure, and maintainable backend systems\n- Participate in schema design and SQL/ORM optimization\n- Automate tests, deploy via CI/CD pipelines\n- Document APIs and contribute to Agile planning\n\nRequirements:\n- Bachelor\u2019s degree in CS/related field\n- 1+ years experience with Java, Python, or Node.js\n- Experience with REST API, SQL, backend frameworks\n- Familiarity with Docker, Kubernetes, cloud platforms\n- Strong analytical and debugging skills\n\nPreferred Qualifications:\n- Experience with Kafka, Redis, GraphQL\n- Security-conscious coding\n\nBenefits:\n- Salary range \u20b97\u201316 LPA\n- Hybrid/remote options\n- Paid leaves, health insurance\n\n",
+      "skills": [
+        "Java",
+        "Python",
+        "Spring Boot",
+        "REST API",
+        "Microservices",
+        "SQL",
+        "Docker",
+        "Kubernetes",
+        "Redis",
+        "MongoDB",
+        "ORM",
+        "API Security",
+        "CI/CD",
+        "Troubleshooting"
+      ]
     },
     "Frontend Developer": {
-      "description": "Frontend Developer: User interface development, React/Vue/Angular, JavaScript, TypeScript, responsive design, CSS frameworks.",
-      "skills": ["React", "Vue.js", "Angular", "JavaScript", "TypeScript", "HTML", "CSS", "Sass", "Webpack", "Bootstrap"]
+      "description": "Job Summary: Join our UI team to develop interactive frontends with modern web technologies. Work closely with designers to create visually stunning and user-centric features.\n\nResponsibilities:\n- Build responsive web pages using React/Angular/Vue.js\n- Optimize for performance, accessibility, and cross-browser compatibility\n- Implement UI logic, integrate APIs, manage state\n- Collaborate with UX/UI designers and backend devs\n- Write unit and integration tests\n- Maintain component libraries and design systems\n\nRequirements:\n- Bachelor\u2019s in CS or similar\n- 1+ years experience building web interfaces\n- Strong command of JavaScript (ES6+), HTML, CSS, and a major JS framework\n- Eye for detail and usability\n- Good teamwork and communication\n\nPreferred Qualifications:\n- Experience with TypeScript, testing frameworks (Jest, Cypress)\n\nBenefits:\n- Salary \u20b96\u201315 LPA\n- Modern tools, flexible culture\n\n",
+      "skills": [
+        "React",
+        "Vue.js",
+        "Angular",
+        "JavaScript",
+        "TypeScript",
+        "HTML",
+        "CSS",
+        "Sass",
+        "Webpack",
+        "Bootstrap",
+        "Testing (Jest, Cypress)",
+        "UI/UX",
+        "Responsive Design"
+      ]
     },
     "Mobile App Developer": {
-      "description": "Mobile App Developer: iOS/Android development, React Native, Flutter, Swift, Kotlin, mobile UI/UX, app store deployment.",
-      "skills": ["React Native", "Flutter", "Swift", "Kotlin", "Java", "Dart", "iOS", "Android", "Mobile UI", "Firebase"]
+      "description": "Job Summary: Lead the development of mobile applications for iOS/Android platforms, delivering best-in-class user experiences.\n\nResponsibilities:\n- Build, test, and maintain scalable apps using React Native, Flutter, Swift, or Kotlin\n- Collaborate with designers to translate requirements into interactive apps\n- Integrate REST APIs, push notifications, third-party SDKs\n- Optimize for performance and device compatibility\n- Publish to App Store/Play Store and maintain updates\n\nRequirements:\n- Bachelor\u2019s in CS or related; 1-3 years experience\n- Hands-on with React Native/Flutter/Swift/Kotlin\n- Experience integrating APIs, mobile UI/UX\n- Familiarity with app life cycle and deployment\n- Teamwork, adaptability, and communication skills\n\nPreferred Qualifications:\n- Working with Firebase, mobile testing tools, native bridges\n\nBenefits:\n- Salary \u20b96\u201317 LPA\n- Learning allowance, flexible hours, health insurance\n\n",
+      "skills": [
+        "React Native",
+        "Flutter",
+        "Swift",
+        "Kotlin",
+        "Java",
+        "Dart",
+        "iOS",
+        "Android",
+        "Mobile UI",
+        "API Integration",
+        "Firebase",
+        "App Deployment",
+        "Performance Tuning",
+        "Communication"
+      ]
     }
   },
   "DevOps & Cloud Engineering": {
     "DevOps Engineer": {
-      "description": "DevOps Engineer: CI/CD pipelines, Docker, Kubernetes, AWS/Azure/GCP, Infrastructure as Code, monitoring, automation.",
-      "skills": ["Docker", "Kubernetes", "Jenkins", "AWS", "Azure", "Terraform", "Ansible", "CI/CD", "Linux", "Git"]
+      "description": "Job Summary: As a DevOps Engineer, you will build and maintain the automation and cloud infrastructure needed to enable continuous software delivery and reliable systems.\n\nResponsibilities:\n- Design, implement, and manage CI/CD pipelines\n- Automate deployments, monitoring, and testing\n- Maintain and optimize cloud infrastructure (AWS/Azure/GCP)\n- Ensure security and compliance of systems\n- Troubleshoot production issues and deploy fixes\n- Collaborate with developers, QA, and IT\n- Create and maintain infrastructure-as-code using Terraform/Ansible\n\nRequirements:\n- Bachelor\u2019s degree in IT/CS field or relevant experience\n- 1-3 years in DevOps or system administration\n- Hands-on with Docker, Kubernetes, GitLab/Jenkins, Linux\n- Proficient in at least one scripting language (Python/Bash)\n- Familiar with CI/CD, cloud deployment, and system monitoring\n- Strong analytical, problem-solving, and communication skills\n\nPreferred Qualifications:\n- Experience with infrastructure as code tools\n- Exposure to configuration management (Ansible, Chef)\n\nBenefits:\n- Salary \u20b97\u201320 LPA\n- Flexible/remote work; L&D budget; team events\n- Comprehensive health and wellness benefits\n\n",
+      "skills": [
+        "Docker",
+        "Kubernetes",
+        "Jenkins",
+        "AWS",
+        "Azure",
+        "Terraform",
+        "Ansible",
+        "CI/CD",
+        "Linux",
+        "Git",
+        "Python",
+        "Bash",
+        "Monitoring",
+        "Infrastructure as Code",
+        "Security"
+      ]
     },
     "Cloud Engineer": {
-      "description": "Cloud Engineer: Cloud infrastructure, AWS/Azure/GCP services, serverless, containers, cloud security, cost optimization.",
-      "skills": ["AWS", "Azure", "GCP", "Lambda", "S3", "EC2", "CloudFormation", "Serverless", "Cloud Security", "Cost Optimization"]
+      "description": "Job Summary: Architect, implement, and maintain secure, scalable cloud infrastructure for enterprise applications.\n\nResponsibilities:\n- Design and maintain cloud environments (AWS/Azure/GCP)\n- Deploy and monitor cloud resources using best practices\n- Manage storage, networking, security, and backups\n- Implement serverless architectures where appropriate\n- Optimize costs and ensure compliance\n- Troubleshoot cloud-related incidents\n- Document architectures and procedures\n\nRequirements:\n- Bachelor\u2019s in IT, CS, or related\n- 1+ years experience in cloud engineering\n- Proficient with AWS/Azure/GCP core services\n- Hands-on with automation tools (Terraform, CloudFormation)\n- Networking, security, identity and access management knowledge\n- Analytical thinking, documentation, teamwork\n\nPreferred Qualifications:\n- Relevant certifications (AWS/Azure)\n\nBenefits:\n- Salary \u20b98\u201322 LPA\n- Remote/hybrid, paid certifications, health coverage\n\n",
+      "skills": [
+        "AWS",
+        "Azure",
+        "GCP",
+        "Terraform",
+        "CloudFormation",
+        "Serverless",
+        "Networking",
+        "Cloud Security",
+        "S3",
+        "EC2",
+        "Monitoring",
+        "Automation",
+        "IAM",
+        "Documentation"
+      ]
     },
     "Cloud Architect": {
-      "description": "Cloud Architect: Enterprise cloud strategy, multi-cloud solutions, scalability, security, compliance, cloud migration.",
-      "skills": ["Cloud Strategy", "Multi-cloud", "Enterprise Architecture", "Security", "Compliance", "Migration", "Scalability", "Cost Management"]
+      "description": "Job Summary: Lead cloud strategy, design scalable multi-cloud solutions, and advise on cloud adoption for large organizations.\n\nResponsibilities:\n- Develop enterprise-wide cloud adoption and migration strategies\n- Architect secure, scalable, and cost-effective solutions across multiple clouds\n- Conduct risk and security assessments\n- Lead technical teams and mentorship\n- Oversee migration projects and ensure compliance\n- Standardize cloud governance\n\nRequirements:\n- Bachelor\u2019s/Master\u2019s in CS, IT, or Engineering\n- 5+ years in cloud/infra roles, 2+ in architecture\n- Proficiency with major cloud platforms, security\n- Strong documentation and communication skills\n\nPreferred Qualifications:\n- Certifications (AWS Professional, Azure Solutions Architect)\n\nBenefits:\n- Salary \u20b912\u201335 LPA+\n- Leadership program access, ESOPs, executive health\n\n",
+      "skills": [
+        "Cloud Architecture",
+        "Multi-Cloud",
+        "Security",
+        "Compliance",
+        "Migration",
+        "Scalability",
+        "Cloud Governance",
+        "Documentation",
+        "Enterprise Architecture",
+        "AWS",
+        "Azure",
+        "Leadership",
+        "Risk Assessment"
+      ]
     },
     "Site Reliability Engineer (SRE)": {
-      "description": "Site Reliability Engineer: System reliability, monitoring, incident response, automation, performance optimization, scalability.",
-      "skills": ["Monitoring", "Prometheus", "Grafana", "Incident Response", "Automation", "Performance Tuning", "SLA", "Kubernetes"]
+      "description": "Job Summary: Ensure reliability and high availability for critical production systems by automating monitoring, scaling, and incident response.\n\nResponsibilities:\n- Build and maintain automated monitoring and alerting systems (Prometheus, Grafana)\n- Coordinate incident response, root cause analysis, and on-call rotations\n- Implement automation for deployments, scaling, failover\n- Define and measure SLAs, SLOs, error budgets\n- Collaborate with dev teams on reliability and best practices\n\nRequirements:\n- Bachelor\u2019s in CS, IT, or relevant field\n- 1+ years in SRE/DevOps roles\n- Experience with monitoring tools\n- Scripting/coding for automation\n- Production troubleshooting skills\n\nPreferred Qualifications:\n- Experience with large-scale distributed systems\n\nBenefits:\n- Salary \u20b99\u201325 LPA\n- Flexible work environment, learning budget, health insurance\n\n",
+      "skills": [
+        "Monitoring",
+        "Prometheus",
+        "Grafana",
+        "Incident Response",
+        "Automation",
+        "SLA",
+        "Error Budgeting",
+        "Kubernetes",
+        "Troubleshooting",
+        "On-Call",
+        "Performance Tuning",
+        "Linux",
+        "Collaboration"
+      ]
     },
     "Infrastructure Engineer": {
-      "description": "Infrastructure Engineer: Server management, network configuration, virtualization, storage systems, backup solutions.",
-      "skills": ["Linux", "Windows Server", "VMware", "Network Configuration", "Storage Systems", "Backup Solutions", "Virtualization"]
-    }
-  },
-  "Cybersecurity": {
-    "Security Analyst": {
-      "description": "Security Analyst: Threat detection, vulnerability assessment, security monitoring, incident analysis, compliance auditing.",
-      "skills": ["Threat Detection", "Vulnerability Assessment", "SIEM", "Incident Response", "Compliance", "Risk Assessment", "Security Tools"]
-    },
-    "Security Engineer": {
-      "description": "Security Engineer: Security architecture, penetration testing, security tools implementation, vulnerability management.",
-      "skills": ["Penetration Testing", "Security Architecture", "Vulnerability Management", "Security Tools", "Network Security", "Encryption"]
-    },
-    "Penetration Tester (Ethical Hacker)": {
-      "description": "Penetration Tester: Ethical hacking, vulnerability assessment, security testing, exploit development, security reporting.",
-      "skills": ["Ethical Hacking", "Penetration Testing", "Vulnerability Assessment", "Exploit Development", "Security Testing", "Reporting"]
-    },
-    "Security Architect": {
-      "description": "Security Architect: Enterprise security design, security frameworks, risk management, compliance strategies.",
-      "skills": ["Security Architecture", "Enterprise Security", "Risk Management", "Compliance", "Security Frameworks", "Threat Modeling"]
-    },
-    "Incident Response Specialist": {
-      "description": "Incident Response Specialist: Cybersecurity incident handling, forensics, malware analysis, breach investigation.",
-      "skills": ["Incident Response", "Digital Forensics", "Malware Analysis", "Breach Investigation", "SIEM", "Threat Hunting"]
-    }
-  },
-  "UI/UX & Design": {
-    "UI Designer": {
-      "description": "UI Designer: User interface design, visual design, design systems, prototyping, Figma/Sketch, responsive design.",
-      "skills": ["UI Design", "Visual Design", "Figma", "Sketch", "Adobe Creative Suite", "Prototyping", "Design Systems", "Responsive Design"]
-    },
-    "UX Designer": {
-      "description": "UX Designer: User experience design, user research, wireframing, usability testing, journey mapping, information architecture.",
-      "skills": ["UX Design", "User Research", "Wireframing", "Usability Testing", "Journey Mapping", "Information Architecture", "Persona Development"]
-    },
-    "Product Designer": {
-      "description": "Product Designer: End-to-end product design, user research, prototyping, design strategy, cross-functional collaboration.",
-      "skills": ["Product Design", "Design Strategy", "User Research", "Prototyping", "Design Thinking", "Cross-functional Collaboration"]
-    },
-    "Interaction Designer": {
-      "description": "Interaction Designer: Interactive design, micro-interactions, animation, user flows, behavior design, prototyping.",
-      "skills": ["Interaction Design", "Micro-interactions", "Animation", "User Flows", "Behavior Design", "Prototyping Tools"]
-    },
-    "UX Researcher": {
-      "description": "UX Researcher: User research methodologies, data analysis, usability studies, A/B testing, research strategy.",
-      "skills": ["User Research", "Data Analysis", "Usability Studies", "A/B Testing", "Research Strategy", "Statistical Analysis"]
+      "description": "Job Summary: Plan, build, and maintain scalable and secure infrastructure including servers, storage, and networks.\n\nResponsibilities:\n- Deploy and configure physical/virtual environments\n- Manage backups, storage, disaster recovery\n- Configure network devices, firewalls, load balancers\n- Monitor for uptime and performance\n- Document infrastructure and processes\n\nRequirements:\n- Bachelor\u2019s in IT, Engineering, or related field\n- Server/network admin experience (Linux, Windows Server, VMware)\n- Familiarity with backup, storage, and virtualization solutions\n- Good written and communication skills\n\nPreferred Qualifications:\n- Certifications (RHCE, Cisco, VMware)\n\nBenefits:\n- Salary \u20b97\u201318 LPA\n- Paid leaves, health/wellness, on-call allowance\n\n",
+      "skills": [
+        "Linux",
+        "Windows Server",
+        "VMware",
+        "Network Configuration",
+        "Storage Systems",
+        "Backup",
+        "Virtualization",
+        "Disaster Recovery",
+        "Firewall Configuration",
+        "System Documentation"
+      ]
     }
   },
   "Artificial Intelligence & Machine Learning": {
     "Machine Learning Engineer": {
-      "description": "Machine Learning Engineer: ML model development, Python, TensorFlow/PyTorch, data pipelines, model deployment, MLOps.",
-      "skills": ["Python", "TensorFlow", "PyTorch", "Scikit-learn", "Data Pipelines", "Model Deployment", "MLOps", "AWS", "Docker"]
+      "description": "Job Summary: Design, build, and deploy machine learning solutions in real-world products. Collaborate with experts to advance AI-powered applications.\n\nResponsibilities:\n- Design and build ML models and pipelines for business/industry problems\n- Prepare, clean, and analyze large data sets\n- Train, tune, and evaluate models using Python and ML frameworks\n- Deploy, monitor, and optimize production ML models\n- Collaborate with data scientists, product managers, and engineering teams\n- Maintain detailed documentation and contribute to knowledge sharing\n\nRequirements:\n- Bachelor\u2019s/Master\u2019s in CS, Statistics, Math, or related field\n- 1+ years in ML development\n- Practical experience with Python, TensorFlow/PyTorch, and ML libraries\n- Sound understanding of data structures, algorithms, probability\n- Familiarity with cloud ML deployment (AWS/GCP/Azure)\n- Strong communication, teamwork skills\n\nPreferred Qualifications:\n- Research publication, Kaggle or competitions participation\n- Experience with DevOps/MLOps\n\nBenefits:\n- Salary \u20b910\u201330 LPA\n- Remote/flexible work, training budget\n\n",
+      "skills": [
+        "Python",
+        "TensorFlow",
+        "PyTorch",
+        "Scikit-learn",
+        "Data Preparation",
+        "Model Deployment",
+        "ML Pipelines",
+        "Cloud ML (AWS/GCP/Azure)",
+        "Statistics",
+        "Data Analysis",
+        "MLOps",
+        "Collaboration",
+        "Problem Solving"
+      ]
     },
     "Deep Learning Engineer": {
-      "description": "Deep Learning Engineer: Neural networks, deep learning frameworks, computer vision, NLP, model optimization, GPU computing.",
-      "skills": ["Deep Learning", "Neural Networks", "TensorFlow", "PyTorch", "Computer Vision", "NLP", "GPU Computing", "CUDA"]
+      "description": "Job Summary: Build state-of-the-art deep learning systems for vision, speech, or NLP solutions.\n\nResponsibilities:\n- Design and implement deep neural networks\n- Prepare, augment, and label large datasets\n- Optimize models for accuracy, latency, and scale\n- Deploy deep learning models to production (cloud/mobile/edge)\n- Collaborate on research and publish results\n- Document experiments and performance\n\nRequirements:\n- Bachelor\u2019s/Master\u2019s in CS/EE or related field\n- 1+ years deep learning experience\n- Proficient with TensorFlow/PyTorch, CUDA, NumPy\n- Experience with computer vision/NLP/data pipelines\n- Analytical mindset, strong programming in Python/C++\n\nPreferred:\n- Contributions to open source or research\n\nBenefits:\n- Salary \u20b910\u201332 LPA\n- L&D, research funding, flexible work\n\n",
+      "skills": [
+        "Deep Learning",
+        "Neural Networks",
+        "TensorFlow",
+        "PyTorch",
+        "CUDA",
+        "Python",
+        "Computer Vision",
+        "NLP",
+        "Model Optimization",
+        "Data Preprocessing",
+        "Research",
+        "C++"
+      ]
     },
     "NLP Engineer": {
-      "description": "NLP Engineer: Natural language processing, text analytics, language models, speech recognition, sentiment analysis.",
-      "skills": ["Natural Language Processing", "Text Analytics", "Language Models", "Speech Recognition", "Sentiment Analysis", "NLTK", "SpaCy"]
+      "description": "Job Summary: Build robust natural language understanding applications and optimize language models for business use-cases.\n\nResponsibilities:\n- Design, fine-tune, and deploy NLP models for tasks like classification, translation, QA\n- Preprocess and manage text data\n- Implement pipelines with tools like SpaCy, NLTK, HuggingFace\n- Integrate NLP solutions with APIs and cloud services\n- Monitor and retrain models based on user feedback\n\nRequirements:\n- Bachelor\u2019s/Master\u2019s in CS, Linguistics, or related\n- 1+ years developing NLP solutions\n- Experience with Python, key NLP libraries\n- Understanding of statistics, ML/AI\n- Communication and documentation skills\n\nPreferred:\n- Experience with speech recognition, ASR, or multi-lingual datasets\n\nBenefits:\n- Salary \u20b99\u201328 LPA\n- Flexible/remote, conferences, health cover\n\n",
+      "skills": [
+        "NLP",
+        "Text Analytics",
+        "Python",
+        "SpaCy",
+        "HuggingFace",
+        "NLTK",
+        "Language Models",
+        "Machine Translation",
+        "Model Deployment",
+        "APIs",
+        "Cloud NLP",
+        "Communication"
+      ]
     },
     "Computer Vision Engineer": {
-      "description": "Computer Vision Engineer: Image processing, object detection, image classification, OpenCV, deep learning for vision.",
-      "skills": ["Computer Vision", "Image Processing", "Object Detection", "OpenCV", "Image Classification", "Deep Learning", "Python"]
+      "description": "Job Summary: Develop and deploy computer vision solutions for image/video processing and real-time applications.\n\nResponsibilities:\n- Design, train, and optimize image/video models\n- Implement detection, segmentation, classification or tracking\n- Use OpenCV, deep learning frameworks\n- Integrate models into live apps and hardware\n- Maintain and update datasets\n- Work with multi-disciplinary teams\n\nRequirements:\n- Bachelor\u2019s in CS/EE/related; 1+ years relevant experience\n- Exposure to OpenCV, deep learning, image processing\n- Strong programming in Python/C++\n- Familiar with inferencing on cloud or edge\n\nBenefits:\n- Salary \u20b910\u201328 LPA\n- Flexible work, R&D/project bonuses\n\n",
+      "skills": [
+        "Computer Vision",
+        "Image Processing",
+        "OpenCV",
+        "TensorFlow",
+        "CNNs",
+        "Object Detection",
+        "Python",
+        "C++",
+        "Model Deployment",
+        "Video Analytics"
+      ]
     },
     "AI Research Scientist": {
-      "description": "AI Research Scientist: AI research, algorithm development, academic publications, experimental design, cutting-edge AI.",
-      "skills": ["AI Research", "Algorithm Development", "Academic Publications", "Experimental Design", "Mathematics", "Statistics", "Python"]
+      "description": "Job Summary: Conduct fundamental and applied AI/ML research. Advance the state-of-the-art and contribute to future product strategy.\n\nResponsibilities:\n- Propose research directions and lead implementation\n- Develop algorithms and publish findings\n- Collaborate with academia and internal teams\n- Mentor junior researchers\n- Present at conferences\n\nRequirements:\n- Master\u2019s/PhD in AI/ML, Statistics, CS, or related\n- Publication record, strong math/stats/AI knowledge\n- Expertise in Python, ML frameworks\n- Analytical, communication, and writing skills\n\nBenefits:\n- Salary \u20b915\u201340 LPA\n- Patent bonuses, conf funding, sabbatical, research perks\n\n",
+      "skills": [
+        "AI Research",
+        "Algorithm Development",
+        "Publications",
+        "Statistics",
+        "Python",
+        "TensorFlow",
+        "Collaboration",
+        "Communication",
+        "Mentoring",
+        "Presentations"
+      ]
     }
   },
   "Data Engineering & Analytics": {
     "Data Engineer": {
-      "description": "Data Engineer: Data pipelines, ETL processes, big data technologies, Spark, Hadoop, data warehousing, cloud platforms.",
-      "skills": ["Python", "SQL", "Apache Spark", "Hadoop", "ETL", "Data Warehousing", "AWS", "Kafka", "Airflow"]
+      "description": "Job Summary: Architect, build, and maintain scalable data pipelines and platforms to support analytics and machine learning.\n\nResponsibilities:\n- Design, implement, and optimize ETL pipelines and data workflows\n- Integrate data from various sources (APIs, databases, files)\n- Build and administer data lakes, warehouses (Redshift, BigQuery, Snowflake)\n- Collaborate on schema/data modeling, ensure data reliability/quality\n- Automate data validation & monitoring\n- Partner with data scientists, analysts, and engineers\n- Document solutions and ensure data governance\n\nRequirements:\n- Bachelor\u2019s in CS, IT, or STEM field\n- 1+ years with Python, SQL, and modern data stack\n- Familiarity with cloud platforms (AWS/GCP/Azure), orchestration (Airflow)\n- Strong problem-solving and communication\n\nPreferred Qualifications:\n- Big Data experience (Spark, Kafka, Hadoop)\n- DataOps, infra-as-code (Terraform), Docker\n\nBenefits:\n- Salary \u20b98\u201324 LPA\n- Remote options, learning budget, insurance\n\n",
+      "skills": [
+        "Python",
+        "SQL",
+        "Data Warehousing",
+        "ETL",
+        "Apache Spark",
+        "Airflow",
+        "BigQuery",
+        "AWS",
+        "Kafka",
+        "Data Modeling",
+        "Data Quality",
+        "Orchestration",
+        "Documentation",
+        "Collaboration"
+      ]
     },
     "Data Analyst": {
-      "description": "Data Analyst: Data analysis, SQL, Excel, Python/R, data visualization, statistical analysis, business intelligence.",
-      "skills": ["SQL", "Excel", "Python", "R", "Data Visualization", "Statistical Analysis", "Tableau", "Power BI", "Business Intelligence"]
+      "description": "Job Summary: Analyze complex datasets to deliver actionable insights that inform business decisions. Visualize, report, and communicate findings to varied stakeholders.\n\nResponsibilities:\n- Analyze large structured/unstructured datasets using SQL, Excel, Python/R\n- Build and maintain dashboards, generate reports\n- Create data visualizations with Tableau or Power BI\n- Employ statistical analyses and BI best practices\n- Collaborate with business and tech teams\n- Document processes and ensure data accuracy\n\nRequirements:\n- Bachelor\u2019s in Math/Stats/CS/Business\n- 1+ years in analytics/data roles\n- Proficiency in SQL and data visualization tools\n- Good written/spoken communication; business acumen\n\nPreferred:\n- Experience with Python/R\n- Exposure to cloud data tools\n\nBenefits:\n- \u20b96\u201319 LPA\n- L&D support, hybrid/remote\n\n",
+      "skills": [
+        "SQL",
+        "Excel",
+        "Python",
+        "R",
+        "Tableau",
+        "Power BI",
+        "Data Visualization",
+        "Statistical Analysis",
+        "Reporting",
+        "Business Intelligence",
+        "Communication"
+      ]
     },
     "Business Intelligence (BI) Analyst": {
-      "description": "BI Analyst: Business intelligence, data modeling, reporting, dashboard creation, KPI analysis, data-driven insights.",
-      "skills": ["Business Intelligence", "Data Modeling", "Reporting", "Dashboard Creation", "KPI Analysis", "Tableau", "Power BI", "SQL"]
+      "description": "Job Summary: Build and manage data models, reports, and dashboards for business performance monitoring.\n\nResponsibilities:\n- Develop KPIs and BI reports using Tableau/Power BI\n- Data modeling, dashboard building, and data storytelling\n- Work with stakeholders to understand data needs\n- Assure data pipeline reliability and usability\n- Deliver presentations and support data-driven decisions\n\nRequirements:\n- Bachelor\u2019s in Business, CS, or similar\n- 1+ years in BI/analytics\n- Hands-on with SQL, data visualization, BI tools\n- Analytical mindset, stakeholder communication\n\nBenefits:\n- \u20b97\u201318 LPA\n- Paid certifications, hybrid/remote, insurance\n\n",
+      "skills": [
+        "Business Intelligence",
+        "SQL",
+        "Tableau",
+        "Power BI",
+        "KPI Analysis",
+        "Data Modeling",
+        "Dashboard Creation",
+        "Reporting",
+        "Presentation Skills"
+      ]
     },
     "Database Administrator": {
-      "description": "Database Administrator: Database management, performance tuning, backup and recovery, security, SQL optimization.",
-      "skills": ["Database Management", "SQL", "Performance Tuning", "Backup and Recovery", "Database Security", "MySQL", "PostgreSQL", "Oracle"]
+      "description": "Job Summary: Manage, secure, and optimize organization databases for reliability, security, and scalability.\n\nResponsibilities:\n- Install, configure, and upgrade databases (MySQL, PostgreSQL, Oracle, etc.)\n- Monitor and tune performance; perform backups and recovery\n- Ensure database security, compliance, data integrity\n- Troubleshoot issues, support disaster recovery planning\n\nRequirements:\n- Bachelor\u2019s in CS or related; 1+ years DB admin experience\n- Expert in database management, tuning, and optimization\n- Scripting (Python/Shell), backup tools, SQL, troubleshooting\n\nBenefits:\n- \u20b97\u201320 LPA\n- Paid time off, certifications, medical\n\n",
+      "skills": [
+        "Database Management",
+        "SQL",
+        "Performance Tuning",
+        "Backup and Recovery",
+        "Database Security",
+        "MySQL",
+        "PostgreSQL",
+        "Oracle",
+        "Scripting",
+        "Troubleshooting"
+      ]
     },
     "Big Data Engineer": {
-      "description": "Big Data Engineer: Big data technologies, Hadoop ecosystem, Spark, data lakes, distributed computing, real-time processing.",
-      "skills": ["Big Data", "Hadoop", "Apache Spark", "Data Lakes", "Distributed Computing", "Real-time Processing", "Kafka", "Hive"]
+      "description": "Job Summary: Architect large-scale data solutions leveraging big data technologies for real-time processing and analytics.\n\nResponsibilities:\n- Build and deploy scalable big data pipelines\n- Work with Hadoop, Spark, Kafka, Hive, data lakes\n- Optimize data storage, retrieval, and streaming\n- Automate jobs, handle large batch/streaming datasets\n- Collaborate with analytics/engineering teams\n\nRequirements:\n- Bachelor\u2019s in STEM\n- 1+ years with big data frameworks\n- Experience building pipelines with Spark, Hadoop, Kafka\n- Cloud big data tools preferred\n\nBenefits:\n- \u20b910\u201328 LPA\n- Hackathons, cloud training, insurance\n\n",
+      "skills": [
+        "Big Data",
+        "Hadoop",
+        "Apache Spark",
+        "Data Lakes",
+        "Distributed Computing",
+        "Kafka",
+        "Hive",
+        "Batch/Stream Processing",
+        "Cloud Platforms",
+        "Automation"
+      ]
     }
   },
-  "Digital Marketing": {
-    "Digital Marketing Specialist": {
-      "description": "Digital Marketing Specialist: Digital marketing strategies, campaign management, analytics, conversion optimization.",
-      "skills": ["Digital Marketing", "Campaign Management", "Google Analytics", "Conversion Optimization", "Marketing Strategy", "A/B Testing"]
+  "Cybersecurity": {
+    "Security Analyst": {
+      "description": "Job Summary: Monitor, detect, and respond to information security incidents to protect company assets. Conduct threat assessments, recommend controls, and promote security awareness.\n\nResponsibilities:\n- Monitor systems/networks for security incidents\n- Analyze and triage alerts, respond to threats\n- Conduct regular vulnerability assessments and audits\n- Investigate security breaches and document findings\n- Prepare incident/forensic reports for management\n- Support compliance (ISO/NIST/GDPR), security policy development\n- Promote awareness and coach teams\n\nRequirements:\n- Bachelor\u2019s in CS, IT, Cybersecurity or related\n- 1+ years in security monitoring/response\n- Experience with SIEM, IDS/IPS, and endpoint protection\n- Strong analytical and communication skills\n\nPreferred Qualifications:\n- Security certifications (CEH, CompTIA Security+)\n- Cloud security knowledge\n\nBenefits:\n- \u20b98\u201322 LPA\n- Paid training/certifications, hybrid/remote, wellness programs\n\n",
+      "skills": [
+        "Threat Detection",
+        "Vulnerability Assessment",
+        "SIEM",
+        "Incident Response",
+        "Compliance",
+        "Risk Assessment",
+        "Security Tools",
+        "Forensics",
+        "Network Security",
+        "Communication"
+      ]
     },
-    "SEO Specialist": {
-      "description": "SEO Specialist: Search engine optimization, keyword research, content optimization, technical SEO, link building.",
-      "skills": ["SEO", "Keyword Research", "Content Optimization", "Technical SEO", "Link Building", "Google Analytics", "Search Console"]
+    "Security Engineer": {
+      "description": "Job Summary: Design, test, and improve secure IT infrastructure. Conduct penetration testing, manage vulnerability programs, and support tech teams.\n\nResponsibilities:\n- Build and maintain security architecture\n- Conduct and document penetration tests\n- Manage network and app vulnerabilities\n- Deploy and operate security tools (IDS/IPS, firewalls)\n- Respond to and investigate incidents\n- Educate others on security best practices\n\nRequirements:\n- Bachelor\u2019s in IT/Cybersecurity; 1+ years hands-on\n- Proficient in pen testing, firewalls, scripting\n- Experience with security operations and tools\n\nPreferred:\n- OSCP/CEH/CISSP\n\nBenefits:\n- \u20b99\u201325 LPA\n- Flexible schedule, medical, growth tracks\n\n",
+      "skills": [
+        "Penetration Testing",
+        "Security Architecture",
+        "Vulnerability Management",
+        "Firewalls",
+        "Network Security",
+        "IDS/IPS",
+        "Scripting",
+        "Security Operations",
+        "Risk Management"
+      ]
     },
-    "Social Media Manager": {
-      "description": "Social Media Manager: Social media strategy, content creation, community management, social media advertising.",
-      "skills": ["Social Media Strategy", "Content Creation", "Community Management", "Social Media Advertising", "Analytics", "Brand Management"]
+    "Penetration Tester (Ethical Hacker)": {
+      "description": "Job Summary: Assess and test organization security posture through controlled and ethical hacking. Identify weaknesses and report remediation steps.\n\nResponsibilities:\n- Plan and execute penetration tests (web, network, app)\n- Simulate attacks to identify vulnerabilities\n- Document and present findings to stakeholders\n- Recommend security improvements\n- Develop custom tools as needed\n\nRequirements:\n- Bachelor\u2019s in CS, InfoSec or related field\n- 1+ years in pen testing/ethical hacking\n- Familiar with Kali Linux, Metasploit, Burp Suite\n- Strong report writing and teamwork\n\nCertifications preferred:\n- OSCP, CEH\n\nBenefits:\n- \u20b98\u201324 LPA\n- Conference budgets, flexible work, insurance\n\n",
+      "skills": [
+        "Ethical Hacking",
+        "Penetration Testing",
+        "Vulnerability Assessment",
+        "Web/App/Network Testing",
+        "Python/Bash",
+        "Security Tools",
+        "Reporting",
+        "Risk Analysis"
+      ]
     },
-    "Content Marketing Manager": {
-      "description": "Content Marketing Manager: Content strategy, content creation, editorial planning, brand storytelling, content distribution.",
-      "skills": ["Content Strategy", "Content Creation", "Editorial Planning", "Brand Storytelling", "Content Distribution", "SEO"]
+    "Security Architect": {
+      "description": "Job Summary: Lead design and review of enterprise security architecture and policy. Oversight of risk and compliance initiatives.\n\nResponsibilities:\n- Design, review, and update security frameworks\n- Develop enterprise security roadmaps\n- Manage architecture reviews, audits, and compliance\n- Drive secure technology adoption, vendor evaluations\n- Mentor engineering teams\n\nRequirements:\n- Bachelor\u2019s/Master\u2019s in CS, InfoSec\n- 5+ years enterprise security, architecture review\n- Strong understanding of frameworks (NIST, ISO 27001)\n\nPreferred:\n- CISSP, CCSP\n\nBenefits:\n- \u20b915\u201335 LPA\n- Executive health, ESOPs, hybrid/remote\n\n",
+      "skills": [
+        "Security Architecture",
+        "Enterprise Security",
+        "Risk Management",
+        "Compliance",
+        "Security Frameworks",
+        "Threat Modeling",
+        "Policy Development",
+        "Audit"
+      ]
     },
-    "Marketing Analytics Specialist": {
-      "description": "Marketing Analytics Specialist: Marketing data analysis, campaign performance, attribution modeling, ROI analysis.",
-      "skills": ["Marketing Analytics", "Campaign Performance", "Attribution Modeling", "ROI Analysis", "Google Analytics", "Data Visualization"]
+    "Incident Response Specialist": {
+      "description": "Job Summary: Respond to, investigate, and remediate cyber incidents and breaches. Conduct forensic analysis and provide rapid support.\n\nResponsibilities:\n- Respond to security incidents, lead triage\n- Collect/log evidence for analysis\n- Perform forensic analysis on compromised assets\n- Conduct root cause analysis, document findings\n- Develop incident playbooks and reporting\n\nRequirements:\n- Bachelor\u2019s in CS, InfoSec, or related\n- 1+ years experience (SOC, IR, forensics)\n- Knowledge of SIEM, endpoint, and forensic tools\n- Calm under pressure, strong teamwork\n\nBenefits:\n- \u20b98\u201323 LPA\n- Wellness benefit, training, paid time off\n\n",
+      "skills": [
+        "Incident Response",
+        "Digital Forensics",
+        "Malware Analysis",
+        "SIEM",
+        "Threat Hunting",
+        "Root Cause Analysis",
+        "Evidence Handling",
+        "Reporting",
+        "Communication"
+      ]
+    }
+  },
+  "UI/UX & Design": {
+    "UI Designer": {
+      "description": "Job Summary: Create visually engaging and user-friendly digital experiences, working with product teams to turn concepts into beautiful, consistent user interfaces.\n\nResponsibilities:\n- Develop design concepts, wireframes, UI mockups\n- Translate brand guidelines into pixel-perfect graphics\n- Collaborate with UX, developers, product managers\n- Maintain and extend design systems\n- Incorporate feedback from usability testing\n- Prepare assets for development hand-off\n\nRequirements:\n- Bachelor\u2019s in Design, Visual Communication, or similar\n- Proficiency in Figma, Sketch, Adobe CC\n- Knowledge of color theory, typography, layout\n- Attention to detail, creative, team-oriented\n\nPreferred:\n- Experience designing for web and mobile\n- Familiar with WCAG/accessibility, basic HTML/CSS\n\nBenefits:\n- \u20b96\u201319 LPA\n- Flexible hours, upskilling budget, creative hackathons\n\n",
+      "skills": [
+        "UI Design",
+        "Visual Design",
+        "Figma",
+        "Sketch",
+        "Adobe Creative Suite",
+        "Typography",
+        "Color Theory",
+        "Wireframing",
+        "Prototyping",
+        "Design Systems",
+        "Collaboration",
+        "Communication"
+      ]
+    },
+    "UX Designer": {
+      "description": "Job Summary: Guide the user experience from research to tested wireframes in digital product and service design.\n\nResponsibilities:\n- Conduct user research (interviews, usability testing)\n- Develop personas, journey maps, and user flows\n- Create and iterate wireframes, prototypes, and mockups\n- Collaborate on product strategy, design workshops\n- Ensure UX best practices and accessibility\n\nRequirements:\n- Bachelor\u2019s in UX, HCI, Psychology, or related\n- Experience with Figma, wireframing, prototyping\n- Research, analysis, empathy, collaboration\n\nBenefits:\n- \u20b97\u201318 LPA\n- L&D budget, wellness, remote work\n\n",
+      "skills": [
+        "UX Design",
+        "User Research",
+        "Wireframing",
+        "Usability Testing",
+        "Journey Mapping",
+        "Information Architecture",
+        "Personas",
+        "Prototyping",
+        "Empathy",
+        "Accessibility",
+        "Collaboration"
+      ]
+    },
+    "Product Designer": {
+      "description": "Job Summary: Own the holistic product design process from discovery to prototyping to high-fidelity delivery.\n\nResponsibilities:\n- Lead design sprints and validate solutions with users\n- Create wireframes, high-fidelity UI, functional prototypes\n- Collaborate cross-functionally (PM, Dev, Marketing)\n- Evolve and document design systems\n- Present and defend design choices\n\nRequirements:\n- Bachelor\u2019s in Product/UX/UI Design or similar\n- 2+ years end-to-end product design\n- Figma/Sketch, prototyping, design thinking\n- Effective communication, stakeholder engagement\n\nBenefits:\n- \u20b98\u201322 LPA\n- Creative meetups, conf budget, hybrid work\n\n",
+      "skills": [
+        "Product Design",
+        "Wireframing",
+        "Prototyping",
+        "User Research",
+        "Design Systems",
+        "Design Thinking",
+        "UI Design",
+        "Figma",
+        "Presentation Skills",
+        "Stakeholder Management"
+      ]
+    },
+    "Interaction Designer": {
+      "description": "Job Summary: Design interactive digital experiences, create engaging micro-interactions and ensure smooth, intuitive user flows.\n\nResponsibilities:\n- Develop and test interactive prototypes\n- Design animations, transitions, feedback, and micro-interactions\n- Optimize flows for usability, consistency, delight\n- Collaborate with UI/UX teams and engineers\n\nRequirements:\n- Degree in Design, HCI, or related\n- Experience with prototyping/animation software\n- Knowledge of usability/UX principles\n- Detail-oriented, creative\n\nBenefits:\n- \u20b97\u201318 LPA\n- Hackathons, wellness, creative studios\n\n",
+      "skills": [
+        "Interaction Design",
+        "Micro-interactions",
+        "Animation",
+        "User Flows",
+        "Prototyping Tools",
+        "Usability",
+        "UX Principles",
+        "Creativity"
+      ]
+    },
+    "UX Researcher": {
+      "description": "Job Summary: Conduct research to deeply understand users, advocate for their needs, and guide design/product direction.\n\nResponsibilities:\n- Plan and execute qualitative/quantitative studies\n- Analyze and communicate user research insights\n- Support usability tests, A/B tests, interviews\n- Synthesize research for product teams\n\nRequirements:\n- Bachelor\u2019s in Psychology, HCI, or related field\n- Research methodology, strong stats/analysis\n- Written and spoken communication\n\nBenefits:\n- \u20b98\u201320 LPA\n- Remote/hybrid, conf budget, wellness\n\n",
+      "skills": [
+        "User Research",
+        "Data Analysis",
+        "Usability Studies",
+        "A/B Testing",
+        "Information Architecture",
+        "Research Strategy",
+        "Statistical Analysis",
+        "Interviewing",
+        "Synthesis",
+        "Communication"
+      ]
     }
   },
   "Product Management": {
     "Product Manager": {
-      "description": "Product Manager: Product strategy, roadmap planning, stakeholder management, market research, product launch.",
-      "skills": ["Product Strategy", "Roadmap Planning", "Stakeholder Management", "Market Research", "Product Launch", "Agile", "User Stories"]
+      "description": "Job Summary: Drive product strategy and execution from ideation to launch and iteration, ensuring products solve real user and business problems.\n\nResponsibilities:\n- Define product vision and roadmaps\n- Gather and prioritize requirements\n- Lead cross-functional teams (engineering, design, marketing)\n- Conduct user and market research\n- Launch and iterate on products; analyze metrics and feedback\n- Manage timelines, budgets, and risks\n\nRequirements:\n- Bachelor\u2019s in Business, CS, or related; MBA preferred\n- 2+ years in product, project, or growth roles\n- Analytical and communication skills; team player\n- Customer-centric mindset, problem-solver\n\nBenefits:\n- \u20b912\u201328 LPA\n- Stock options, conference travel, hybrid\n\n",
+      "skills": [
+        "Product Strategy",
+        "Roadmap Planning",
+        "Stakeholder Management",
+        "Market Research",
+        "Product Launch",
+        "Agile",
+        "User Stories",
+        "Analytics",
+        "Communication"
+      ]
     },
     "Technical Product Manager": {
-      "description": "Technical Product Manager: Technical product strategy, engineering collaboration, API strategy, technical roadmap.",
-      "skills": ["Technical Product Strategy", "Engineering Collaboration", "API Strategy", "Technical Roadmap", "Agile", "Software Development"]
+      "description": "Job Summary: Own the technical strategy and execution of APIs, software platforms, or complex product ecosystems.\n\nResponsibilities:\n- Define technical product requirements (APIs, platforms)\n- Collaborate closely with engineers, review designs\n- Ensure alignment across teams on tech direction\n- Troubleshoot and prioritize technical tradeoffs\n- Oversee delivery, integration, and launch\n\nRequirements:\n- Bachelor\u2019s in CS/Eng; technical background mandatory\n- 2+ years as PM/engineer\n- Understanding of SDLC, API design, system integration\n\nBenefits:\n- \u20b913\u201330 LPA\n- RSUs, upskilling budget, hybrid/remote\n\n",
+      "skills": [
+        "Technical Product Strategy",
+        "API Design",
+        "Engineering Collaboration",
+        "System Integration",
+        "Software Development",
+        "Technical Roadmap",
+        "Project Management"
+      ]
     },
     "Product Owner": {
-      "description": "Product Owner: Agile product ownership, backlog management, user story writing, sprint planning, stakeholder communication.",
-      "skills": ["Agile", "Scrum", "Backlog Management", "User Story Writing", "Sprint Planning", "Stakeholder Communication"]
+      "description": "Job Summary: Serve as the liaison between business stakeholders and the development team, defining and prioritizing product backlogs in Agile settings.\n\nResponsibilities:\n- Write user stories, prioritize product backlogs\n- Ensure sprint goals align with business\n- Gather feedback, refine requirements\n- Communicate vision and prioritize delivery\n\nRequirements:\n- Bachelor\u2019s in Business, IT, or related\n- Product ownership or BA experience\n- Agile/Scrum knowledge\n\nBenefits:\n- \u20b910\u201323 LPA\n- Training budget, hybrid\n\n",
+      "skills": [
+        "Agile",
+        "Scrum",
+        "Backlog Management",
+        "User Story Writing",
+        "Sprint Planning",
+        "Stakeholder Communication"
+      ]
     },
     "Growth Product Manager": {
-      "description": "Growth Product Manager: Growth strategy, experimentation, user acquisition, retention, data-driven growth.",
-      "skills": ["Growth Strategy", "Experimentation", "User Acquisition", "Retention", "Data-driven Growth", "A/B Testing"]
+      "description": "Job Summary: Drive product-led growth by running experiments, maximizing user acquisition, retention, and engagement with a data-driven approach.\n\nResponsibilities:\n- Lead growth, funnel, and A/B testing initiatives\n- Analyze product metrics, identify opportunities\n- Work with design, engineering, and marketing on experiments\n- Report on KPIs and recommend action steps\n\nRequirements:\n- Bachelor\u2019s in Business, CS, or Data/Analytics\n- 2+ years in product/growth/analytics roles\n- Analytical, data-driven, communicative\n\nBenefits:\n- \u20b911\u201326 LPA\n- L&D, marketing conf tickets, profit sharing\n\n",
+      "skills": [
+        "Growth Strategy",
+        "Experimentation",
+        "User Acquisition",
+        "Retention",
+        "A/B Testing",
+        "Data-driven Growth",
+        "Analytics"
+      ]
     },
     "Product Marketing Manager": {
-      "description": "Product Marketing Manager: Go-to-market strategy, product positioning, competitive analysis, marketing campaigns.",
-      "skills": ["Go-to-market Strategy", "Product Positioning", "Competitive Analysis", "Marketing Campaigns", "Market Research"]
+      "description": "Job Summary: Bridge product, marketing, and sales to define GTM strategies, product positioning, and competitive messaging.\n\nResponsibilities:\n- Develop and execute go-to-market plans\n- Define product positioning, pricing, messaging\n- Liaise between product, marketing, and sales teams\n- Analyze competitors, market trends\n\nRequirements:\n- Bachelor\u2019s in Business, Marketing, or related\n- 2+ years marketing/product experience\n- Communication and research skills\n\nBenefits:\n- \u20b910\u201325 LPA\n- RSUs, hybrid, education allowance\n\n",
+      "skills": [
+        "Go-to-market Strategy",
+        "Product Positioning",
+        "Competitive Analysis",
+        "Marketing Campaigns",
+        "Market Research",
+        "Sales Enablement"
+      ]
+    }
+  },
+  "Digital Marketing": {
+    "Digital Marketing Specialist": {
+      "description": "Job Summary: Plan, execute, and optimize digital marketing campaigns across channels to build brand and generate leads.\n\nResponsibilities:\n- Develop and manage paid/organic campaigns (SEM, social, email)\n- Analyze data to optimize ad spend and performance\n- Track KPIs and report campaign ROIs\n- Collaborate with sales, creative, and analytics teams\n- Stay current with digital trends and tools\n\nRequirements:\n- Bachelor\u2019s in Marketing, Business, or related\n- 1+ years digital campaign management\n- Analytical, adaptable, communication\n\nBenefits:\n- \u20b97\u201318 LPA\n- Training, health, flexible work\n\n",
+      "skills": [
+        "Digital Marketing",
+        "SEM",
+        "Google Analytics",
+        "Campaign Management",
+        "Conversion Optimization",
+        "SEO",
+        "Market Research",
+        "Content",
+        "Reporting"
+      ]
+    },
+    "SEO Specialist": {
+      "description": "Job Summary: Optimize websites and content to improve search rankings, traffic, and visibility.\n\nResponsibilities:\n- Conduct keyword research, on-page/off-page SEO\n- Audit and optimize site architecture, technical SEO\n- Create SEO-friendly content\n- Monitor analytics, track rankings\n\nRequirements:\n- Bachelor\u2019s in Marketing, IT, or relevant field\n- 1+ years SEO experience\n- Hands-on with SEO tools (Google Search Console, SEMrush)\n\nBenefits:\n- \u20b96\u201316 LPA\n- L&D, hybrid, certifications\n\n",
+      "skills": [
+        "SEO",
+        "Keyword Research",
+        "Content Optimization",
+        "Technical SEO",
+        "Link Building",
+        "Analytics",
+        "Google Search Console",
+        "Market Research"
+      ]
+    },
+    "Social Media Manager": {
+      "description": "Job Summary: Build and oversee company\u2019s social presence, strategy, and community engagement.\n\nResponsibilities:\n- Plan and schedule posts, run ad campaigns\n- Build community and respond to queries\n- Track and analyze engagement/metrics\n- Coordinate with creative and marketing\n\nRequirements:\n- Bachelor\u2019s in Marketing/Communication\n- 1+ years managing social platforms\n\nBenefits:\n- \u20b96\u201316 LPA\n- Flexible/remote, creative perks\n\n",
+      "skills": [
+        "Social Media Strategy",
+        "Content Creation",
+        "Community Management",
+        "Social Media Advertising",
+        "Analytics",
+        "Brand Management",
+        "Engagement"
+      ]
+    },
+    "Content Marketing Manager": {
+      "description": "Job Summary: Plan and create compelling content that supports branding and lead-gen initiatives.\n\nResponsibilities:\n- Devise and oversee content strategy\n- Manage editorial calendars, write/edit long/short-form\n- Track SEO/content performance\n- Collaborate with marketing and product teams\n\nRequirements:\n- Bachelor\u2019s English/Marketing/Media\n- Excellent writing, editing, research\n- Project management\n\nBenefits:\n- \u20b97\u201318 LPA\n- RSUs, writing workshops, insurance\n\n",
+      "skills": [
+        "Content Strategy",
+        "Editorial Planning",
+        "Content Creation",
+        "Brand Storytelling",
+        "SEO",
+        "Content Distribution",
+        "Writing/Editing"
+      ]
+    },
+    "Marketing Analytics Specialist": {
+      "description": "Job Summary: Analyze marketing data and campaign performance to drive ROI and business decisions.\n\nResponsibilities:\n- Collect/analyze multi-channel data, derive insights\n- Build dashboards/reports\n- Support attribution modeling and A/B testing\n- Advise teams based on analytics\n\nRequirements:\n- Bachelor\u2019s in Statistics, Analytics, or Marketing\n- Proficient in BI/reporting tools\n- Communication and presentation\n\nBenefits:\n- \u20b97\u201318 LPA\n- Hybrid, L&D, medical\n\n",
+      "skills": [
+        "Marketing Analytics",
+        "Campaign Performance",
+        "Attribution Modeling",
+        "ROI Analysis",
+        "Google Analytics",
+        "Data Visualization",
+        "Reporting"
+      ]
     }
   }
 }
-
-
