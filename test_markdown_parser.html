@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Response Styling Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+    </style>
+</head>
+<body class="p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-white mb-8">Gemini Response Styling Preview</h1>
+        
+        <!-- Before: Plain Text -->
+        <div class="mb-8 p-6 bg-gray-800 bg-opacity-50 rounded-xl border border-red-600">
+            <h2 class="text-xl font-semibold text-red-300 mb-4">❌ Before: Plain Text (Bad)</h2>
+            <div class="text-gray-300 whitespace-pre-wrap leading-relaxed font-mono text-sm">
+Here's a precise analysis and actionable feedback for the SDE::Frontend Developer role:
+
+**Strengths**
+
+*   Proficient in React.js, JavaScript (ES6+), HTML5, CSS3, TailwindCSS.
+*   Developed a full-stack chat application with a React frontend.
+*   Solved 350+ LeetCode problems, demonstrating strong problem-solving.
+
+**Weaknesses**
+
+*   Resume's primary focus is AI/ML, not dedicated Frontend Development.
+*   Summary emphasizes AI/ML and general full-stack skills, not frontend expertise.
+*   Most projects highlight AI/ML/NLP, lacking depth in core frontend challenges.
+
+**Improvements**
+
+*   **Reframe** Summary to explicitly target Frontend Developer, emphasizing React, JavaScript, and UI/UX expertise.
+*   **Prioritize** "Real-Time Full-Stack Chat Application" project, detailing React frontend contributions and user experience.
+            </div>
+        </div>
+        
+        <!-- After: Styled -->
+        <div class="mb-8 p-6 bg-gray-800 bg-opacity-50 rounded-xl border border-green-600">
+            <h2 class="text-xl font-semibold text-green-300 mb-4">✅ After: Styled Components (Good)</h2>
+            <div class="gemini-response">
+                <!-- Intro text -->
+                <p class="text-gray-300 mb-4 leading-relaxed">
+                    Here's a precise analysis and actionable feedback for the SDE::Frontend Developer role:
+                </p>
+                
+                <!-- Strengths Section -->
+                <div class="flex items-center gap-3 mb-4 mt-6">
+                    <div class="text-green-400">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-green-300">Strengths</h3>
+                </div>
+                <ul class="space-y-3 mb-6">
+                    <li class="flex items-start gap-3 text-gray-300">
+                        <span class="text-blue-400 mt-1 flex-shrink-0 text-sm">•</span>
+                        <span class="leading-relaxed">Proficient in React.js, JavaScript (ES6+), HTML5, CSS3, TailwindCSS.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-gray-300">
+                        <span class="text-blue-400 mt-1 flex-shrink-0 text-sm">•</span>
+                        <span class="leading-relaxed">Developed a full-stack chat application with a React frontend.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-gray-300">
+                        <span class="text-blue-400 mt-1 flex-shrink-0 text-sm">•</span>
+                        <span class="leading-relaxed">Solved 350+ LeetCode problems, demonstrating strong problem-solving.</span>
+                    </li>
+                </ul>
+                
+                <!-- Weaknesses Section -->
+                <div class="flex items-center gap-3 mb-4 mt-6">
+                    <div class="text-orange-400">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 15.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-orange-300">Weaknesses</h3>
+                </div>
+                <ul class="space-y-3 mb-6">
+                    <li class="flex items-start gap-3 text-gray-300">
+                        <span class="text-blue-400 mt-1 flex-shrink-0 text-sm">•</span>
+                        <span class="leading-relaxed">Resume's primary focus is AI/ML, not dedicated Frontend Development.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-gray-300">
+                        <span class="text-blue-400 mt-1 flex-shrink-0 text-sm">•</span>
+                        <span class="leading-relaxed">Summary emphasizes AI/ML and general full-stack skills, not frontend expertise.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-gray-300">
+                        <span class="text-blue-400 mt-1 flex-shrink-0 text-sm">•</span>
+                        <span class="leading-relaxed">Most projects highlight AI/ML/NLP, lacking depth in core frontend challenges.</span>
+                    </li>
+                </ul>
+                
+                <!-- Improvements Section -->
+                <div class="flex items-center gap-3 mb-4 mt-6">
+                    <div class="text-blue-400">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-blue-300">Improvements</h3>
+                </div>
+                <ul class="space-y-3 mb-6">
+                    <li class="flex items-start gap-3 text-gray-300">
+                        <span class="text-blue-400 mt-1 flex-shrink-0 text-sm">•</span>
+                        <span class="leading-relaxed"><strong class="text-white font-semibold">Reframe</strong> Summary to explicitly target Frontend Developer, emphasizing React, JavaScript, and UI/UX expertise.</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-gray-300">
+                        <span class="text-blue-400 mt-1 flex-shrink-0 text-sm">•</span>
+                        <span class="leading-relaxed"><strong class="text-white font-semibold">Prioritize</strong> "Real-Time Full-Stack Chat Application" project, detailing React frontend contributions and user experience.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Timestamp example -->
+        <div class="mb-8 p-6 bg-gray-800 bg-opacity-50 rounded-xl border border-gray-600">
+            <div class="flex justify-between items-center mb-6">
+                <h4 class="text-xl font-semibold text-white flex items-center gap-3">
+                    <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                    </svg>
+                    AI-Generated Summary
+                </h4>
+                <div class="flex items-center gap-2 text-green-400 text-sm font-medium px-3 py-1 bg-green-900 bg-opacity-30 rounded-full border border-green-700">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Generated: 2025-09-16 21:21:41</span>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm">
+                ↑ This timestamp only appears when the response is actually generated by Gemini AI.
+                <br>For fallback responses, no timestamp will be shown.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -3,6 +3,351 @@ import Suggestions from '../components/Suggestions';
 import { useState, useEffect, useRef } from 'react';
 import { api } from '../services/api';
 
+// Component to render Gemini response with proper styling
+function GeminiResponseRenderer({ text }) {
+  if (!text) return null;
+
+  // Parse the markdown-like content and convert to styled JSX
+  const parseContent = (content) => {
+    const lines = content.split('\n');
+    const elements = [];
+    let inList = false;
+    let listItems = [];
+    let currentSection = null;
+
+    const flushList = () => {
+      if (listItems.length > 0) {
+        elements.push(
+          <ul key={`list-${elements.length}`} className="space-y-3 mb-6">
+            {listItems.map((item, idx) => (
+              <li key={idx} className="flex items-start gap-3 text-gray-300">
+                <span className="text-blue-400 mt-1 flex-shrink-0 text-sm">•</span>
+                <span className="leading-relaxed">{item}</span>
+              </li>
+            ))}
+          </ul>
+        );
+        listItems = [];
+      }
+      inList = false;
+    };
+
+    lines.forEach((line, index) => {
+      const trimmed = line.trim();
+      
+      // Skip empty lines
+      if (!trimmed) {
+        if (inList) flushList();
+        return;
+      }
+
+      // Handle markdown headers (### Header)
+      if (trimmed.startsWith('###')) {
+        if (inList) flushList();
+        const title = trimmed.replace(/^###\s*/, '').trim();
+        
+        // Different colors and icons for different sections
+        let headerColor = 'text-white';
+        let iconColor = 'text-blue-400';
+        let bgColor = 'bg-blue-900 bg-opacity-30 border-blue-700';
+        let icon = null;
+        
+        if (title.toLowerCase().includes('strength')) {
+          headerColor = 'text-green-300';
+          iconColor = 'text-green-400';
+          bgColor = 'bg-green-900 bg-opacity-30 border-green-700';
+          icon = (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          );
+        } else if (title.toLowerCase().includes('weakness')) {
+          headerColor = 'text-orange-300';
+          iconColor = 'text-orange-400';
+          bgColor = 'bg-orange-900 bg-opacity-30 border-orange-700';
+          icon = (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 15.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+          );
+        } else if (title.toLowerCase().includes('improvement')) {
+          headerColor = 'text-blue-300';
+          iconColor = 'text-blue-400';
+          bgColor = 'bg-blue-900 bg-opacity-30 border-blue-700';
+          icon = (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          );
+        } else if (title.toLowerCase().includes('example')) {
+          headerColor = 'text-purple-300';
+          iconColor = 'text-purple-400';
+          bgColor = 'bg-purple-900 bg-opacity-30 border-purple-700';
+          icon = (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+          );
+        } else if (title.toLowerCase().includes('recommendation') || title.toLowerCase().includes('suggestion')) {
+          headerColor = 'text-indigo-300';
+          iconColor = 'text-indigo-400';
+          bgColor = 'bg-indigo-900 bg-opacity-30 border-indigo-700';
+          icon = (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+          );
+        }
+        
+        // Store current list state for next section
+        let nextListItems = [];
+        
+        elements.push(
+          <div key={`section-${index}`} className={`rounded-lg p-6 border ${bgColor} mb-6 mt-4`}>
+            <div className="flex items-center gap-3 mb-4">
+              <div className={iconColor}>{icon}</div>
+              <h3 className={`text-xl font-bold ${headerColor}`}>{title}</h3>
+            </div>
+            <div className="section-content" data-section={title.toLowerCase()}>
+              {/* Content will be added by subsequent iterations */}
+            </div>
+          </div>
+        );
+        
+        currentSection = title;
+        return;
+      }
+
+      // Handle section headers (like **Strengths**, **Weaknesses**)
+      if (trimmed.startsWith('**') && trimmed.endsWith('**')) {
+        if (inList) flushList();
+        const title = trimmed.replace(/\*\*/g, '');
+        
+        // Different colors for different sections
+        let headerColor = 'text-white';
+        let iconColor = 'text-blue-400';
+        let icon = null;
+        
+        if (title.toLowerCase().includes('strength')) {
+          headerColor = 'text-green-300';
+          iconColor = 'text-green-400';
+          icon = (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          );
+        } else if (title.toLowerCase().includes('weakness')) {
+          headerColor = 'text-orange-300';
+          iconColor = 'text-orange-400';
+          icon = (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 15.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+          );
+        } else if (title.toLowerCase().includes('improvement')) {
+          headerColor = 'text-blue-300';
+          iconColor = 'text-blue-400';
+          icon = (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          );
+        } else if (title.toLowerCase().includes('example')) {
+          headerColor = 'text-purple-300';
+          iconColor = 'text-purple-400';
+          icon = (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+          );
+        }
+        
+        elements.push(
+          <div key={`header-${index}`} className="flex items-center gap-3 mb-4 mt-6">
+            <div className={iconColor}>{icon}</div>
+            <h3 className={`text-xl font-bold ${headerColor}`}>{title}</h3>
+          </div>
+        );
+        currentSection = title;
+        return;
+      }
+
+      // Handle bullet points (lines starting with * or -)
+      if (trimmed.startsWith('*') || trimmed.startsWith('-')) {
+        let content = trimmed.replace(/^[*-]\s*/, '').trim();
+        
+        // Remove bold markdown and handle nested bold text
+        content = content.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>');
+        
+        if (!inList) {
+          inList = true;
+        }
+        
+        listItems.push(
+          <span dangerouslySetInnerHTML={{ __html: content }} />
+        );
+        return;
+      }
+
+      // Handle regular text
+      if (inList) flushList();
+      
+      // Handle bold text in regular content
+      let content = trimmed.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>');
+      
+      elements.push(
+        <p key={`text-${index}`} className="text-gray-300 mb-4 leading-relaxed" 
+           dangerouslySetInnerHTML={{ __html: content }} />
+      );
+    });
+
+    // Flush any remaining list
+    if (inList) flushList();
+
+    return elements;
+  };
+
+  // Alternative approach: render as structured sections
+  const renderStructuredContent = (content) => {
+    const sections = content.split(/###\s+/);
+    
+    return sections.map((section, index) => {
+      if (index === 0 && !section.trim()) return null; // Skip empty intro
+      
+      const lines = section.trim().split('\n');
+      if (lines.length === 0) return null;
+      
+      const title = lines[0].trim();
+      const body = lines.slice(1).join('\n').trim();
+      
+      if (!title) return null;
+      
+      // Determine section styling based on title
+      let headerColor = 'text-white';
+      let iconColor = 'text-blue-400';
+      let bgColor = 'bg-gray-800 bg-opacity-40 border-gray-600';
+      let icon = null;
+      
+      if (title.toLowerCase().includes('strength')) {
+        headerColor = 'text-green-300';
+        iconColor = 'text-green-400';
+        bgColor = 'bg-green-900 bg-opacity-30 border-green-700';
+        icon = (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        );
+      } else if (title.toLowerCase().includes('weakness')) {
+        headerColor = 'text-orange-300';
+        iconColor = 'text-orange-400';
+        bgColor = 'bg-orange-900 bg-opacity-30 border-orange-700';
+        icon = (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 15.5c-.77.833.192 2.5 1.732 2.5z" />
+          </svg>
+        );
+      } else if (title.toLowerCase().includes('improvement')) {
+        headerColor = 'text-blue-300';
+        iconColor = 'text-blue-400';
+        bgColor = 'bg-blue-900 bg-opacity-30 border-blue-700';
+        icon = (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        );
+      } else if (title.toLowerCase().includes('example')) {
+        headerColor = 'text-purple-300';
+        iconColor = 'text-purple-400';
+        bgColor = 'bg-purple-900 bg-opacity-30 border-purple-700';
+        icon = (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          </svg>
+        );
+      } else if (title.toLowerCase().includes('recommendation') || title.toLowerCase().includes('suggestion')) {
+        headerColor = 'text-indigo-300';
+        iconColor = 'text-indigo-400';
+        bgColor = 'bg-indigo-900 bg-opacity-30 border-indigo-700';
+        icon = (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          </svg>
+        );
+      }
+      
+      // Parse body content for bullet points
+      const renderBody = (bodyText) => {
+        if (!bodyText) return null;
+        
+        const bodyLines = bodyText.split('\n');
+        const elements = [];
+        let listItems = [];
+        
+        bodyLines.forEach((line, lineIndex) => {
+          const trimmed = line.trim();
+          if (!trimmed) return;
+          
+          if (trimmed.startsWith('*') || trimmed.startsWith('-')) {
+            let content = trimmed.replace(/^[*-]\s*/, '').trim();
+            content = content.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>');
+            listItems.push(
+              <li key={lineIndex} className="flex items-start gap-3 text-gray-300">
+                <span className="text-current mt-1 flex-shrink-0 text-sm opacity-70">•</span>
+                <span className="leading-relaxed" dangerouslySetInnerHTML={{ __html: content }} />
+              </li>
+            );
+          } else {
+            if (listItems.length > 0) {
+              elements.push(
+                <ul key={`list-${elements.length}`} className="space-y-3 mb-4">
+                  {listItems}
+                </ul>
+              );
+              listItems = [];
+            }
+            const content = trimmed.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>');
+            elements.push(
+              <p key={lineIndex} className="text-gray-300 mb-3 leading-relaxed" 
+                 dangerouslySetInnerHTML={{ __html: content }} />
+            );
+          }
+        });
+        
+        if (listItems.length > 0) {
+          elements.push(
+            <ul key={`list-${elements.length}`} className="space-y-3">
+              {listItems}
+            </ul>
+          );
+        }
+        
+        return elements;
+      };
+      
+      return (
+        <div key={index} className={`rounded-lg p-6 border ${bgColor} mb-6`}>
+          <div className="flex items-center gap-3 mb-4">
+            <div className={iconColor}>{icon}</div>
+            <h3 className={`text-xl font-bold ${headerColor}`}>{title}</h3>
+          </div>
+          <div className="text-gray-300">
+            {renderBody(body)}
+          </div>
+        </div>
+      );
+    }).filter(Boolean);
+  };
+
+  // Check if content has ### headers to decide rendering approach
+  const hasMarkdownHeaders = text.includes('###');
+
+  return (
+    <div className="gemini-response">
+      {hasMarkdownHeaders ? renderStructuredContent(text) : parseContent(text)}
+    </div>
+  );
+}
+
 // ATS Score Circle Component
 function ATSScoreCircle({ score }) {
   const radius = 90;
@@ -470,11 +815,16 @@ export default function Results({ data, onRestart }) {
             </div>
             
             {detail.llm_polished_text && (
-              <div className="mb-8 p-4 bg-gray-700 bg-opacity-50 rounded-lg">
-                <div className="flex justify-between items-center mb-3">
-                  <h4 className="text-lg font-semibold text-white">AI-Generated Summary</h4>
+              <div className="mb-8 p-6 bg-gray-800 bg-opacity-50 rounded-xl border border-gray-600">
+                <div className="flex justify-between items-center mb-6">
+                  <h4 className="text-xl font-semibold text-white flex items-center gap-3">
+                    <svg className="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    AI-Generated Summary
+                  </h4>
                   {detail.gemini_timestamp && (
-                    <div className="flex items-center gap-2 text-green-400 text-sm">
+                    <div className="flex items-center gap-2 text-green-400 text-sm font-medium px-3 py-1 bg-green-900 bg-opacity-30 rounded-full border border-green-700">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -482,9 +832,7 @@ export default function Results({ data, onRestart }) {
                     </div>
                   )}
                 </div>
-                <div className="text-gray-300 whitespace-pre-wrap leading-relaxed">
-                  {detail.llm_polished_text}
-                </div>
+                <GeminiResponseRenderer text={detail.llm_polished_text} />
               </div>
             )}
             
