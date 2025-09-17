@@ -1,18 +1,178 @@
 {
-  "SDE": {
+  "Software Development (SDE)": {
+    "Software Development Engineer (SDE)": {
+      "description": "Software Development Engineer: Full-stack development, system design, algorithms, data structures, Java/Python/C++, microservices, API development.",
+      "skills": ["Java", "Python", "C++", "System Design", "Algorithms", "Data Structures", "Microservices", "API Development", "Git", "SQL"]
+    },
+    "Full-Stack Developer": {
+      "description": "Full-Stack Developer: Frontend and backend development, React/Angular, Node.js, databases, REST APIs, cloud deployment.",
+      "skills": ["React", "Angular", "Node.js", "JavaScript", "HTML", "CSS", "MongoDB", "PostgreSQL", "REST API", "AWS"]
+    },
     "Backend Developer": {
-      "description": "Backend Developer requires Java, Spring Boot, REST APIs, microservices, Docker, Kubernetes, SQL.",
-      "skills": ["Java", "Spring Boot", "REST API", "Microservices", "SQL", "Docker", "Kubernetes"]
+      "description": "Backend Developer: Server-side development, Java/Python, Spring Boot, REST APIs, microservices, Docker, Kubernetes, SQL.",
+      "skills": ["Java", "Python", "Spring Boot", "REST API", "Microservices", "SQL", "Docker", "Kubernetes", "Redis", "MongoDB"]
     },
     "Frontend Developer": {
-      "description": "Frontend Developer: React, JavaScript, HTML, CSS.",
-      "skills": ["React", "JavaScript", "HTML", "CSS"]
+      "description": "Frontend Developer: User interface development, React/Vue/Angular, JavaScript, TypeScript, responsive design, CSS frameworks.",
+      "skills": ["React", "Vue.js", "Angular", "JavaScript", "TypeScript", "HTML", "CSS", "Sass", "Webpack", "Bootstrap"]
+    },
+    "Mobile App Developer": {
+      "description": "Mobile App Developer: iOS/Android development, React Native, Flutter, Swift, Kotlin, mobile UI/UX, app store deployment.",
+      "skills": ["React Native", "Flutter", "Swift", "Kotlin", "Java", "Dart", "iOS", "Android", "Mobile UI", "Firebase"]
     }
   },
-  "Data Science": {
-    "Data Scientist": {
-      "description": "Data Scientist: Python, Pandas, SQL, Machine Learning, TensorFlow/PyTorch, statistics.",
-      "skills": ["Python", "Pandas", "SQL", "Machine Learning", "TensorFlow", "PyTorch", "Statistics"]
+  "DevOps & Cloud Engineering": {
+    "DevOps Engineer": {
+      "description": "DevOps Engineer: CI/CD pipelines, Docker, Kubernetes, AWS/Azure/GCP, Infrastructure as Code, monitoring, automation.",
+      "skills": ["Docker", "Kubernetes", "Jenkins", "AWS", "Azure", "Terraform", "Ansible", "CI/CD", "Linux", "Git"]
+    },
+    "Cloud Engineer": {
+      "description": "Cloud Engineer: Cloud infrastructure, AWS/Azure/GCP services, serverless, containers, cloud security, cost optimization.",
+      "skills": ["AWS", "Azure", "GCP", "Lambda", "S3", "EC2", "CloudFormation", "Serverless", "Cloud Security", "Cost Optimization"]
+    },
+    "Cloud Architect": {
+      "description": "Cloud Architect: Enterprise cloud strategy, multi-cloud solutions, scalability, security, compliance, cloud migration.",
+      "skills": ["Cloud Strategy", "Multi-cloud", "Enterprise Architecture", "Security", "Compliance", "Migration", "Scalability", "Cost Management"]
+    },
+    "Site Reliability Engineer (SRE)": {
+      "description": "Site Reliability Engineer: System reliability, monitoring, incident response, automation, performance optimization, scalability.",
+      "skills": ["Monitoring", "Prometheus", "Grafana", "Incident Response", "Automation", "Performance Tuning", "SLA", "Kubernetes"]
+    },
+    "Infrastructure Engineer": {
+      "description": "Infrastructure Engineer: Server management, network configuration, virtualization, storage systems, backup solutions.",
+      "skills": ["Linux", "Windows Server", "VMware", "Network Configuration", "Storage Systems", "Backup Solutions", "Virtualization"]
+    }
+  },
+  "Cybersecurity": {
+    "Security Analyst": {
+      "description": "Security Analyst: Threat detection, vulnerability assessment, security monitoring, incident analysis, compliance auditing.",
+      "skills": ["Threat Detection", "Vulnerability Assessment", "SIEM", "Incident Response", "Compliance", "Risk Assessment", "Security Tools"]
+    },
+    "Security Engineer": {
+      "description": "Security Engineer: Security architecture, penetration testing, security tools implementation, vulnerability management.",
+      "skills": ["Penetration Testing", "Security Architecture", "Vulnerability Management", "Security Tools", "Network Security", "Encryption"]
+    },
+    "Penetration Tester (Ethical Hacker)": {
+      "description": "Penetration Tester: Ethical hacking, vulnerability assessment, security testing, exploit development, security reporting.",
+      "skills": ["Ethical Hacking", "Penetration Testing", "Vulnerability Assessment", "Exploit Development", "Security Testing", "Reporting"]
+    },
+    "Security Architect": {
+      "description": "Security Architect: Enterprise security design, security frameworks, risk management, compliance strategies.",
+      "skills": ["Security Architecture", "Enterprise Security", "Risk Management", "Compliance", "Security Frameworks", "Threat Modeling"]
+    },
+    "Incident Response Specialist": {
+      "description": "Incident Response Specialist: Cybersecurity incident handling, forensics, malware analysis, breach investigation.",
+      "skills": ["Incident Response", "Digital Forensics", "Malware Analysis", "Breach Investigation", "SIEM", "Threat Hunting"]
+    }
+  },
+  "UI/UX & Design": {
+    "UI Designer": {
+      "description": "UI Designer: User interface design, visual design, design systems, prototyping, Figma/Sketch, responsive design.",
+      "skills": ["UI Design", "Visual Design", "Figma", "Sketch", "Adobe Creative Suite", "Prototyping", "Design Systems", "Responsive Design"]
+    },
+    "UX Designer": {
+      "description": "UX Designer: User experience design, user research, wireframing, usability testing, journey mapping, information architecture.",
+      "skills": ["UX Design", "User Research", "Wireframing", "Usability Testing", "Journey Mapping", "Information Architecture", "Persona Development"]
+    },
+    "Product Designer": {
+      "description": "Product Designer: End-to-end product design, user research, prototyping, design strategy, cross-functional collaboration.",
+      "skills": ["Product Design", "Design Strategy", "User Research", "Prototyping", "Design Thinking", "Cross-functional Collaboration"]
+    },
+    "Interaction Designer": {
+      "description": "Interaction Designer: Interactive design, micro-interactions, animation, user flows, behavior design, prototyping.",
+      "skills": ["Interaction Design", "Micro-interactions", "Animation", "User Flows", "Behavior Design", "Prototyping Tools"]
+    },
+    "UX Researcher": {
+      "description": "UX Researcher: User research methodologies, data analysis, usability studies, A/B testing, research strategy.",
+      "skills": ["User Research", "Data Analysis", "Usability Studies", "A/B Testing", "Research Strategy", "Statistical Analysis"]
+    }
+  },
+  "Artificial Intelligence & Machine Learning": {
+    "Machine Learning Engineer": {
+      "description": "Machine Learning Engineer: ML model development, Python, TensorFlow/PyTorch, data pipelines, model deployment, MLOps.",
+      "skills": ["Python", "TensorFlow", "PyTorch", "Scikit-learn", "Data Pipelines", "Model Deployment", "MLOps", "AWS", "Docker"]
+    },
+    "Deep Learning Engineer": {
+      "description": "Deep Learning Engineer: Neural networks, deep learning frameworks, computer vision, NLP, model optimization, GPU computing.",
+      "skills": ["Deep Learning", "Neural Networks", "TensorFlow", "PyTorch", "Computer Vision", "NLP", "GPU Computing", "CUDA"]
+    },
+    "NLP Engineer": {
+      "description": "NLP Engineer: Natural language processing, text analytics, language models, speech recognition, sentiment analysis.",
+      "skills": ["Natural Language Processing", "Text Analytics", "Language Models", "Speech Recognition", "Sentiment Analysis", "NLTK", "SpaCy"]
+    },
+    "Computer Vision Engineer": {
+      "description": "Computer Vision Engineer: Image processing, object detection, image classification, OpenCV, deep learning for vision.",
+      "skills": ["Computer Vision", "Image Processing", "Object Detection", "OpenCV", "Image Classification", "Deep Learning", "Python"]
+    },
+    "AI Research Scientist": {
+      "description": "AI Research Scientist: AI research, algorithm development, academic publications, experimental design, cutting-edge AI.",
+      "skills": ["AI Research", "Algorithm Development", "Academic Publications", "Experimental Design", "Mathematics", "Statistics", "Python"]
+    }
+  },
+  "Data Engineering & Analytics": {
+    "Data Engineer": {
+      "description": "Data Engineer: Data pipelines, ETL processes, big data technologies, Spark, Hadoop, data warehousing, cloud platforms.",
+      "skills": ["Python", "SQL", "Apache Spark", "Hadoop", "ETL", "Data Warehousing", "AWS", "Kafka", "Airflow"]
+    },
+    "Data Analyst": {
+      "description": "Data Analyst: Data analysis, SQL, Excel, Python/R, data visualization, statistical analysis, business intelligence.",
+      "skills": ["SQL", "Excel", "Python", "R", "Data Visualization", "Statistical Analysis", "Tableau", "Power BI", "Business Intelligence"]
+    },
+    "Business Intelligence (BI) Analyst": {
+      "description": "BI Analyst: Business intelligence, data modeling, reporting, dashboard creation, KPI analysis, data-driven insights.",
+      "skills": ["Business Intelligence", "Data Modeling", "Reporting", "Dashboard Creation", "KPI Analysis", "Tableau", "Power BI", "SQL"]
+    },
+    "Database Administrator": {
+      "description": "Database Administrator: Database management, performance tuning, backup and recovery, security, SQL optimization.",
+      "skills": ["Database Management", "SQL", "Performance Tuning", "Backup and Recovery", "Database Security", "MySQL", "PostgreSQL", "Oracle"]
+    },
+    "Big Data Engineer": {
+      "description": "Big Data Engineer: Big data technologies, Hadoop ecosystem, Spark, data lakes, distributed computing, real-time processing.",
+      "skills": ["Big Data", "Hadoop", "Apache Spark", "Data Lakes", "Distributed Computing", "Real-time Processing", "Kafka", "Hive"]
+    }
+  },
+  "Digital Marketing": {
+    "Digital Marketing Specialist": {
+      "description": "Digital Marketing Specialist: Digital marketing strategies, campaign management, analytics, conversion optimization.",
+      "skills": ["Digital Marketing", "Campaign Management", "Google Analytics", "Conversion Optimization", "Marketing Strategy", "A/B Testing"]
+    },
+    "SEO Specialist": {
+      "description": "SEO Specialist: Search engine optimization, keyword research, content optimization, technical SEO, link building.",
+      "skills": ["SEO", "Keyword Research", "Content Optimization", "Technical SEO", "Link Building", "Google Analytics", "Search Console"]
+    },
+    "Social Media Manager": {
+      "description": "Social Media Manager: Social media strategy, content creation, community management, social media advertising.",
+      "skills": ["Social Media Strategy", "Content Creation", "Community Management", "Social Media Advertising", "Analytics", "Brand Management"]
+    },
+    "Content Marketing Manager": {
+      "description": "Content Marketing Manager: Content strategy, content creation, editorial planning, brand storytelling, content distribution.",
+      "skills": ["Content Strategy", "Content Creation", "Editorial Planning", "Brand Storytelling", "Content Distribution", "SEO"]
+    },
+    "Marketing Analytics Specialist": {
+      "description": "Marketing Analytics Specialist: Marketing data analysis, campaign performance, attribution modeling, ROI analysis.",
+      "skills": ["Marketing Analytics", "Campaign Performance", "Attribution Modeling", "ROI Analysis", "Google Analytics", "Data Visualization"]
+    }
+  },
+  "Product Management": {
+    "Product Manager": {
+      "description": "Product Manager: Product strategy, roadmap planning, stakeholder management, market research, product launch.",
+      "skills": ["Product Strategy", "Roadmap Planning", "Stakeholder Management", "Market Research", "Product Launch", "Agile", "User Stories"]
+    },
+    "Technical Product Manager": {
+      "description": "Technical Product Manager: Technical product strategy, engineering collaboration, API strategy, technical roadmap.",
+      "skills": ["Technical Product Strategy", "Engineering Collaboration", "API Strategy", "Technical Roadmap", "Agile", "Software Development"]
+    },
+    "Product Owner": {
+      "description": "Product Owner: Agile product ownership, backlog management, user story writing, sprint planning, stakeholder communication.",
+      "skills": ["Agile", "Scrum", "Backlog Management", "User Story Writing", "Sprint Planning", "Stakeholder Communication"]
+    },
+    "Growth Product Manager": {
+      "description": "Growth Product Manager: Growth strategy, experimentation, user acquisition, retention, data-driven growth.",
+      "skills": ["Growth Strategy", "Experimentation", "User Acquisition", "Retention", "Data-driven Growth", "A/B Testing"]
+    },
+    "Product Marketing Manager": {
+      "description": "Product Marketing Manager: Go-to-market strategy, product positioning, competitive analysis, marketing campaigns.",
+      "skills": ["Go-to-market Strategy", "Product Positioning", "Competitive Analysis", "Marketing Campaigns", "Market Research"]
     }
   }
 }

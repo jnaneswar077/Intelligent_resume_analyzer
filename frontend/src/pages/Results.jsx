@@ -864,9 +864,65 @@ function Step1ResumeUpload({ onNext, onFileSelect, selectedFile }) {
 function Step2CategorySelection({ onNext, onPrev, selectedCategory, onCategorySelect, availableRoles }) {
   const categories = Object.keys(availableRoles || {});
   
+  // Category icons mapping
+  const categoryIcons = {
+    "Software Development (SDE)": (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+      </svg>
+    ),
+    "DevOps & Cloud Engineering": (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+      </svg>
+    ),
+    "Cybersecurity": (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      </svg>
+    ),
+    "UI/UX & Design": (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
+      </svg>
+    ),
+    "Artificial Intelligence & Machine Learning": (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+      </svg>
+    ),
+    "Data Engineering & Analytics": (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+      </svg>
+    ),
+    "Digital Marketing": (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+      </svg>
+    ),
+    "Product Management": (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+      </svg>
+    )
+  };
+  
+  // Category colors mapping
+  const categoryColors = {
+    "Software Development (SDE)": { border: "border-blue-500", bg: "bg-blue-900", icon: "text-blue-400" },
+    "DevOps & Cloud Engineering": { border: "border-green-500", bg: "bg-green-900", icon: "text-green-400" },
+    "Cybersecurity": { border: "border-red-500", bg: "bg-red-900", icon: "text-red-400" },
+    "UI/UX & Design": { border: "border-purple-500", bg: "bg-purple-900", icon: "text-purple-400" },
+    "Artificial Intelligence & Machine Learning": { border: "border-orange-500", bg: "bg-orange-900", icon: "text-orange-400" },
+    "Data Engineering & Analytics": { border: "border-indigo-500", bg: "bg-indigo-900", icon: "text-indigo-400" },
+    "Digital Marketing": { border: "border-pink-500", bg: "bg-pink-900", icon: "text-pink-400" },
+    "Product Management": { border: "border-teal-500", bg: "bg-teal-900", icon: "text-teal-400" }
+  };
+  
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col">
-      <div className="max-w-4xl mx-auto px-6 py-8 flex-1">
+      <div className="max-w-7xl mx-auto px-6 py-8 flex-1">
         <StepIndicator currentStep={2} />
         
         <div className="text-center mb-8">
@@ -875,26 +931,41 @@ function Step2CategorySelection({ onNext, onPrev, selectedCategory, onCategorySe
         </div>
 
         <div className="bg-gray-800 bg-opacity-60 backdrop-blur-sm rounded-2xl p-8 border border-gray-700 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
             {categories.map((category) => {
               const roles = availableRoles[category] || {};
               const rolesList = Object.keys(roles);
+              const colors = categoryColors[category] || { border: "border-gray-500", bg: "bg-gray-900", icon: "text-gray-400" };
               
               return (
                 <div
                   key={category}
                   onClick={() => onCategorySelect(category)}
-                  className={`p-6 rounded-xl border-2 cursor-pointer transition-all duration-300 ${
+                  className={`group p-6 rounded-xl border-2 cursor-pointer transition-all duration-300 transform hover:scale-105 ${
                     selectedCategory === category
-                      ? 'border-blue-500 bg-blue-900 bg-opacity-30'
+                      ? `${colors.border} ${colors.bg} bg-opacity-30 shadow-lg`
                       : 'border-gray-600 bg-gray-800 bg-opacity-50 hover:border-gray-500 hover:bg-gray-700 hover:bg-opacity-50'
                   }`}
                 >
+                  {/* Category Header */}
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-semibold text-white">{category}</h3>
-                    <div className={`w-6 h-6 rounded-full border-2 transition-colors ${
+                    <div className={`p-3 rounded-lg transition-colors ${
+                      selectedCategory === category ? colors.bg : 'bg-gray-700'
+                    } bg-opacity-50`}>
+                      <div className={`transition-colors ${
+                        selectedCategory === category ? colors.icon : 'text-gray-400 group-hover:text-gray-300'
+                      }`}>
+                        {categoryIcons[category] || (
+                          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                          </svg>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <div className={`w-6 h-6 rounded-full border-2 transition-all duration-200 ${
                       selectedCategory === category
-                        ? 'bg-blue-500 border-blue-500'
+                        ? `${colors.border} ${colors.bg} bg-opacity-80`
                         : 'border-gray-400'
                     }`}>
                       {selectedCategory === category && (
@@ -905,18 +976,45 @@ function Step2CategorySelection({ onNext, onPrev, selectedCategory, onCategorySe
                     </div>
                   </div>
                   
-                  <div className="space-y-2">
-                    <p className="text-gray-400 text-sm mb-3">{rolesList.length} available roles:</p>
-                    <div className="flex flex-wrap gap-2">
+                  {/* Category Title */}
+                  <h3 className={`text-lg font-semibold mb-3 transition-colors ${
+                    selectedCategory === category ? 'text-white' : 'text-gray-200 group-hover:text-white'
+                  }`}>
+                    {category.replace(' (SDE)', '').replace('Software Development', 'SDE')}
+                  </h3>
+                  
+                  {/* Roles Count and Preview */}
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className={`text-sm font-medium transition-colors ${
+                        selectedCategory === category ? colors.icon : 'text-gray-400 group-hover:text-gray-300'
+                      }`}>
+                        {rolesList.length} available roles
+                      </span>
+                      <div className={`w-2 h-2 rounded-full transition-colors ${
+                        selectedCategory === category ? colors.bg : 'bg-gray-500'
+                      }`}></div>
+                    </div>
+                    
+                    {/* Role Preview */}
+                    <div className="space-y-1">
                       {rolesList.slice(0, 3).map((role) => (
-                        <span key={role} className="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">
-                          {role}
-                        </span>
+                        <div key={role} className={`text-xs px-2 py-1 rounded-full transition-colors ${
+                          selectedCategory === category 
+                            ? `${colors.bg} bg-opacity-40 text-gray-200` 
+                            : 'bg-gray-700 text-gray-300 group-hover:bg-gray-600'
+                        }`}>
+                          {role.length > 25 ? `${role.substring(0, 25)}...` : role}
+                        </div>
                       ))}
                       {rolesList.length > 3 && (
-                        <span className="px-3 py-1 bg-gray-700 text-gray-400 rounded-full text-sm">
-                          +{rolesList.length - 3} more
-                        </span>
+                        <div className={`text-xs px-2 py-1 rounded-full transition-colors ${
+                          selectedCategory === category 
+                            ? `${colors.bg} bg-opacity-30 text-gray-300` 
+                            : 'bg-gray-700 text-gray-400 group-hover:bg-gray-600'
+                        }`}>
+                          +{rolesList.length - 3} more roles
+                        </div>
                       )}
                     </div>
                   </div>
@@ -929,20 +1027,26 @@ function Step2CategorySelection({ onNext, onPrev, selectedCategory, onCategorySe
         <div className="flex justify-between">
           <button
             onClick={onPrev}
-            className="px-6 py-3 bg-gray-700 text-white rounded-lg font-semibold hover:bg-gray-600 transition-colors"
+            className="px-6 py-3 bg-gray-700 text-white rounded-lg font-semibold hover:bg-gray-600 transition-colors flex items-center gap-2"
           >
-            ← Back
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back
           </button>
           <button
             onClick={onNext}
             disabled={!selectedCategory}
-            className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 ${
+            className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 flex items-center gap-2 ${
               selectedCategory
-                ? 'bg-blue-500 hover:bg-blue-600 text-white hover:scale-105'
+                ? 'bg-blue-500 hover:bg-blue-600 text-white hover:scale-105 shadow-lg'
                 : 'bg-gray-600 text-gray-400 cursor-not-allowed'
             }`}
           >
             Continue to Job Description
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </button>
         </div>
       </div>
@@ -956,6 +1060,12 @@ function Step3JobDescription({ onNext, onPrev, selectedCategory, availableRoles,
   const rolesList = Object.keys(roles);
   const [activeTab, setActiveTab] = useState('paste'); // 'paste' or 'sample'
   
+  // Get category display name
+  const getCategoryDisplayName = (category) => {
+    if (category === "Software Development (SDE)") return "SDE";
+    return category;
+  };
+  
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col">
       <div className="max-w-6xl mx-auto px-6 py-8 flex-1">
@@ -963,7 +1073,10 @@ function Step3JobDescription({ onNext, onPrev, selectedCategory, availableRoles,
         
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-white mb-4">Add Job Description</h1>
-          <p className="text-gray-400">Paste a job description or select from sample roles in {selectedCategory}</p>
+          <p className="text-gray-400">
+            Paste a job description or select from sample roles in 
+            <span className="text-blue-400 font-medium">{getCategoryDisplayName(selectedCategory)}</span>
+          </p>
         </div>
 
         <div className="bg-gray-800 bg-opacity-60 backdrop-blur-sm rounded-2xl border border-gray-700 mb-8">
@@ -977,7 +1090,12 @@ function Step3JobDescription({ onNext, onPrev, selectedCategory, availableRoles,
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              PASTE A JOB DESCRIPTION BELOW
+              <div className="flex items-center justify-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                PASTE A JOB DESCRIPTION BELOW
+              </div>
             </button>
             <div className="w-px bg-gray-600"></div>
             <button
@@ -988,7 +1106,13 @@ function Step3JobDescription({ onNext, onPrev, selectedCategory, availableRoles,
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              <span className="text-blue-400">OR</span> USE A SAMPLE JOB DESCRIPTION
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-blue-400">OR</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+                USE A SAMPLE JOB DESCRIPTION
+              </div>
             </button>
           </div>
 
@@ -996,16 +1120,38 @@ function Step3JobDescription({ onNext, onPrev, selectedCategory, availableRoles,
             {activeTab === 'paste' ? (
               /* Paste Job Description */
               <div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    Job Description
+                  </label>
+                  <p className="text-xs text-gray-500 mb-4">
+                    Paste the complete job description from the job posting
+                  </p>
+                </div>
                 <textarea
                   value={jobDescription}
                   onChange={(e) => onJobDescriptionChange(e.target.value)}
-                  placeholder="Job Description..."
-                  className="w-full h-80 p-4 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 resize-none focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  placeholder="Job Description...\n\nExample:\nWe are looking for a skilled Frontend Developer to join our team...\n\nRequirements:\n• 3+ years of experience with React\n• Strong knowledge of JavaScript, HTML, CSS\n• Experience with modern build tools"
+                  className="w-full h-80 p-4 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 resize-none focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
                 />
+                {jobDescription && (
+                  <div className="mt-2 text-xs text-gray-400">
+                    {jobDescription.length} characters
+                  </div>
+                )}
               </div>
             ) : (
               /* Sample Job Descriptions */
               <div>
+                <div className="mb-6">
+                  <h4 className="text-lg font-semibold text-white mb-2">
+                    Available Roles in {getCategoryDisplayName(selectedCategory)}
+                  </h4>
+                  <p className="text-sm text-gray-400">
+                    Select a role to use its job description as a template for analysis
+                  </p>
+                </div>
+                
                 <div className="max-h-80 overflow-y-auto space-y-3">
                   {rolesList.map((role) => {
                     const roleData = roles[role];
@@ -1013,33 +1159,59 @@ function Step3JobDescription({ onNext, onPrev, selectedCategory, availableRoles,
                       <div
                         key={role}
                         onClick={() => onSampleRoleSelect(role)}
-                        className={`p-4 rounded-lg border cursor-pointer transition-all duration-200 ${
+                        className={`p-5 rounded-lg border cursor-pointer transition-all duration-200 group ${
                           selectedSampleRole === role
-                            ? 'border-blue-500 bg-blue-900 bg-opacity-30'
-                            : 'border-gray-600 bg-gray-700 bg-opacity-50 hover:border-gray-500 hover:bg-gray-600 hover:bg-opacity-50'
+                            ? 'border-blue-500 bg-blue-900 bg-opacity-30 shadow-lg'
+                            : 'border-gray-600 bg-gray-700 bg-opacity-50 hover:border-gray-500 hover:bg-gray-600 hover:bg-opacity-50 hover:shadow-md'
                         }`}
                       >
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <h4 className="text-white font-semibold mb-2">{role}</h4>
-                            <p className="text-gray-400 text-sm mb-2">{roleData.description}</p>
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-3">
+                              <h4 className={`font-semibold transition-colors ${
+                                selectedSampleRole === role ? 'text-white' : 'text-gray-200 group-hover:text-white'
+                              }`}>
+                                {role}
+                              </h4>
+                              {selectedSampleRole === role && (
+                                <span className="px-2 py-1 bg-blue-500 text-white text-xs rounded-full font-medium">
+                                  Selected
+                                </span>
+                              )}
+                            </div>
+                            
+                            <p className={`text-sm mb-3 transition-colors ${
+                              selectedSampleRole === role ? 'text-gray-200' : 'text-gray-400 group-hover:text-gray-300'
+                            }`}>
+                              {roleData.description}
+                            </p>
+                            
                             <div className="flex flex-wrap gap-2">
-                              {roleData.skills.slice(0, 5).map((skill) => (
-                                <span key={skill} className="px-2 py-1 bg-gray-600 text-gray-300 rounded text-xs">
+                              {roleData.skills.slice(0, 6).map((skill) => (
+                                <span key={skill} className={`px-2 py-1 rounded text-xs transition-colors ${
+                                  selectedSampleRole === role 
+                                    ? 'bg-blue-800 bg-opacity-50 text-blue-200' 
+                                    : 'bg-gray-600 text-gray-300 group-hover:bg-gray-500'
+                                }`}>
                                   {skill}
                                 </span>
                               ))}
-                              {roleData.skills.length > 5 && (
-                                <span className="px-2 py-1 bg-gray-600 text-gray-400 rounded text-xs">
-                                  +{roleData.skills.length - 5} more
+                              {roleData.skills.length > 6 && (
+                                <span className={`px-2 py-1 rounded text-xs transition-colors ${
+                                  selectedSampleRole === role 
+                                    ? 'bg-blue-800 bg-opacity-30 text-blue-300' 
+                                    : 'bg-gray-600 text-gray-400 group-hover:bg-gray-500'
+                                }`}>
+                                  +{roleData.skills.length - 6} more
                                 </span>
                               )}
                             </div>
                           </div>
-                          <div className={`w-6 h-6 rounded-full border-2 transition-colors flex-shrink-0 ${
+                          
+                          <div className={`w-6 h-6 rounded-full border-2 transition-all duration-200 flex-shrink-0 ml-4 ${
                             selectedSampleRole === role
-                              ? 'bg-blue-500 border-blue-500'
-                              : 'border-gray-400'
+                              ? 'bg-blue-500 border-blue-500 shadow-lg'
+                              : 'border-gray-400 group-hover:border-gray-300'
                           }`}>
                             {selectedSampleRole === role && (
                               <svg className="w-4 h-4 text-white m-0.5" fill="currentColor" viewBox="0 0 20 20">
@@ -1052,6 +1224,18 @@ function Step3JobDescription({ onNext, onPrev, selectedCategory, availableRoles,
                     );
                   })}
                 </div>
+                
+                {rolesList.length === 0 && (
+                  <div className="text-center py-12">
+                    <div className="text-gray-400 mb-2">
+                      <svg className="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                      </svg>
+                      No sample roles available for this category
+                    </div>
+                    <p className="text-sm text-gray-500">Please use the "Paste Job Description" option instead</p>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -1060,19 +1244,25 @@ function Step3JobDescription({ onNext, onPrev, selectedCategory, availableRoles,
         <div className="flex justify-between">
           <button
             onClick={onPrev}
-            className="px-6 py-3 bg-gray-700 text-white rounded-lg font-semibold hover:bg-gray-600 transition-colors"
+            className="px-6 py-3 bg-gray-700 text-white rounded-lg font-semibold hover:bg-gray-600 transition-colors flex items-center gap-2"
           >
-            ← Back
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back
           </button>
           <button
             onClick={onNext}
             disabled={!jobDescription && !selectedSampleRole}
-            className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 ${
+            className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 flex items-center gap-2 ${
               (jobDescription || selectedSampleRole)
-                ? 'bg-blue-500 hover:bg-blue-600 text-white hover:scale-105'
+                ? 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white hover:scale-105 shadow-lg'
                 : 'bg-gray-600 text-gray-400 cursor-not-allowed'
             }`}
           >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
             SCAN
           </button>
         </div>
