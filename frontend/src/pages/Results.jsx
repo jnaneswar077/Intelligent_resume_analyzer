@@ -932,7 +932,7 @@ function Step2CategorySelection({ onNext, onPrev, selectedCategory, onCategorySe
         </div>
 
         <div className="bg-gray-800 bg-opacity-60 backdrop-blur-sm rounded-2xl p-8 border border-gray-700 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-8">
             {categories.map((category) => {
               const roles = availableRoles[category] || {};
               const rolesList = Object.keys(roles);
@@ -942,7 +942,7 @@ function Step2CategorySelection({ onNext, onPrev, selectedCategory, onCategorySe
               return (
                 <div
                   key={category}
-                  className="group h-80"
+                  className="group min-h-80"
                   onMouseEnter={() => setHoveredCategory(category)}
                   onMouseLeave={() => setHoveredCategory(null)}
                   style={{ perspective: '1000px' }}
@@ -1023,48 +1023,35 @@ function Step2CategorySelection({ onNext, onPrev, selectedCategory, onCategorySe
                         transform: 'rotateY(180deg)'
                       }}
                     >
-                      {/* Selection checkbox in top right */}
-                      <div className="flex justify-end mb-4">
-                        <div className={`w-6 h-6 rounded-full border-2 transition-all duration-200 ${
-                          selectedCategory === category
-                            ? `${colors.border} ${colors.bg} bg-opacity-80`
-                            : `${colors.border}`
-                        }`}>
-                          {selectedCategory === category && (
-                            <svg className="w-4 h-4 text-white m-0.5" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                            </svg>
-                          )}
-                        </div>
-                      </div>
-                      
-                      {/* Available Roles List - Full Height */}
-                      <div className="space-y-2 h-56 overflow-y-auto">
+                      {/* Available Roles Grid - Compact Pills Layout */}
+                      <div className="h-full flex flex-col">
                         <h4 className={`text-lg font-semibold mb-4 ${colors.icon}`}>
                           Available Roles ({rolesList.length})
                         </h4>
-                        {rolesList.map((role, index) => (
-                          <div 
-                            key={role} 
-                            className={`text-sm px-4 py-3 rounded-lg transition-all duration-200 ${
-                              selectedCategory === category 
-                                ? `${colors.bg} bg-opacity-60 text-gray-100` 
-                                : `${colors.bg} bg-opacity-40 text-gray-200`
-                            }`}
-                          >
-                            {role}
+                        <div className="flex flex-wrap gap-2 flex-1 content-start">
+                          {rolesList.map((role, index) => (
+                            <div 
+                              key={role} 
+                              className={`text-xs px-3 py-2 rounded-full transition-all duration-200 font-medium ${
+                                selectedCategory === category 
+                                  ? `${colors.bg} bg-opacity-80 text-white border border-opacity-50 ${colors.border} shadow-lg` 
+                                  : `${colors.bg} bg-opacity-50 text-gray-200 hover:bg-opacity-70 hover:text-white`
+                              }`}
+                            >
+                              {role.replace(/\s*\([^)]*\)/g, '').replace('Software Development Engineer', 'SDE')}
+                            </div>
+                          ))}
+                        </div>
+                        
+                        {/* Click instruction at bottom */}
+                        <div className="mt-4">
+                          <div className={`text-xs px-3 py-2 rounded-full text-center ${
+                            selectedCategory === category 
+                              ? `${colors.bg} bg-opacity-60 text-white` 
+                              : `${colors.bg} bg-opacity-40 text-gray-200`
+                          }`}>
+                            Click to select
                           </div>
-                        ))}
-                      </div>
-                      
-                      {/* Click instruction */}
-                      <div className="mt-4">
-                        <div className={`text-xs px-3 py-2 rounded-full text-center ${
-                          selectedCategory === category 
-                            ? `${colors.bg} bg-opacity-60 text-white` 
-                            : `${colors.bg} bg-opacity-40 text-gray-200`
-                        }`}>
-                          Click to select
                         </div>
                       </div>
                     </div>
@@ -1109,7 +1096,6 @@ function Step2CategorySelection({ onNext, onPrev, selectedCategory, onCategorySe
 function Step3JobDescription({ onNext, onPrev, selectedCategory, availableRoles, jobDescription, onJobDescriptionChange, selectedSampleRole, onSampleRoleSelect }) {
   const roles = selectedCategory ? availableRoles[selectedCategory] || {} : {};
   const rolesList = Object.keys(roles);
-  const [activeTab, setActiveTab] = useState('paste'); // 'paste' or 'sample'
   
   // Get category display name
   const getCategoryDisplayName = (category) => {
@@ -1131,59 +1117,25 @@ function Step3JobDescription({ onNext, onPrev, selectedCategory, availableRoles,
         </div>
 
         <div className="bg-gray-800 bg-opacity-60 backdrop-blur-sm rounded-2xl border border-gray-700 mb-8">
-          {/* Tab Headers */}
-          <div className="flex border-b border-gray-600">
-            <button
-              onClick={() => setActiveTab('paste')}
-              className={`flex-1 py-4 px-6 font-medium transition-colors ${
-                activeTab === 'paste'
-                  ? 'text-white border-b-2 border-blue-500 bg-gray-700 bg-opacity-50'
-                  : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              <div className="flex items-center justify-center gap-2">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                PASTE A JOB DESCRIPTION BELOW
-              </div>
-            </button>
-            <div className="w-px bg-gray-600"></div>
-            <button
-              onClick={() => setActiveTab('sample')}
-              className={`flex-1 py-4 px-6 font-medium transition-colors ${
-                activeTab === 'sample'
-                  ? 'text-white border-b-2 border-blue-500 bg-gray-700 bg-opacity-50'
-                  : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              <div className="flex items-center justify-center gap-2">
-                <span className="text-blue-400">OR</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                </svg>
-                USE A SAMPLE JOB DESCRIPTION
-              </div>
-            </button>
-          </div>
-
           <div className="p-8">
-            {activeTab === 'paste' ? (
-              /* Paste Job Description */
-              <div>
+            {/* Split Layout: Job Description on Left, Roles on Right */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Left Side - Job Description Input */}
+              <div className="space-y-4">
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     Job Description
                   </label>
-                  <p className="text-xs text-gray-500 mb-4">
-                    Paste the complete job description from the job posting
+                  <p className="text-xs text-gray-400 mb-4">
+                    Paste your job description below or select a role from the right to auto-fill
                   </p>
                 </div>
+                
                 <textarea
                   value={jobDescription}
                   onChange={(e) => onJobDescriptionChange(e.target.value)}
-                  placeholder="Job Description...\n\nExample:\nWe are looking for a skilled Frontend Developer to join our team...\n\nRequirements:\n• 3+ years of experience with React\n• Strong knowledge of JavaScript, HTML, CSS\n• Experience with modern build tools"
-                  className="w-full h-80 p-4 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 resize-none focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                  placeholder="Paste job description here or select a role from the available roles list..."
+                  className="w-full h-96 p-4 bg-gray-700 bg-opacity-50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
                 />
                 {jobDescription && (
                   <div className="mt-2 text-xs text-gray-400">
@@ -1191,104 +1143,96 @@ function Step3JobDescription({ onNext, onPrev, selectedCategory, availableRoles,
                   </div>
                 )}
               </div>
-            ) : (
-              /* Sample Job Descriptions */
-              <div>
-                <div className="mb-6">
+
+              {/* Right Side - Available Roles */}
+              <div className="space-y-4">
+                <div className="mb-4">
                   <h4 className="text-lg font-semibold text-white mb-2">
                     Available Roles in {getCategoryDisplayName(selectedCategory)}
                   </h4>
                   <p className="text-sm text-gray-400">
-                    Select a role to use its job description as a template for analysis
+                    Click on any role to auto-fill its job description
                   </p>
                 </div>
                 
-                <div className="max-h-80 overflow-y-auto space-y-3">
+                <div className="bg-gray-700 bg-opacity-30 rounded-lg p-4 h-96 overflow-y-auto space-y-3">
                   {rolesList.map((role) => {
                     const roleData = roles[role];
+                    const isSelected = selectedSampleRole === role;
                     return (
                       <div
                         key={role}
-                        onClick={() => onSampleRoleSelect(role)}
-                        className={`p-5 rounded-lg border cursor-pointer transition-all duration-200 group ${
-                          selectedSampleRole === role
+                        onClick={() => {
+                          onSampleRoleSelect(role);
+                          // Auto-fill job description
+                          onJobDescriptionChange(roleData.description);
+                        }}
+                        className={`p-4 rounded-lg border cursor-pointer transition-all duration-200 group ${
+                          isSelected
                             ? 'border-blue-500 bg-blue-900 bg-opacity-30 shadow-lg'
                             : 'border-gray-600 bg-gray-700 bg-opacity-50 hover:border-gray-500 hover:bg-gray-600 hover:bg-opacity-50 hover:shadow-md'
                         }`}
                       >
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-3 mb-3">
-                              <h4 className={`font-semibold transition-colors ${
-                                selectedSampleRole === role ? 'text-white' : 'text-gray-200 group-hover:text-white'
-                              }`}>
-                                {role}
-                              </h4>
-                              {selectedSampleRole === role && (
-                                <span className="px-2 py-1 bg-blue-500 text-white text-xs rounded-full font-medium">
-                                  Selected
-                                </span>
-                              )}
-                            </div>
-                            
-                            <p className={`text-sm mb-3 transition-colors ${
-                              selectedSampleRole === role ? 'text-gray-200' : 'text-gray-400 group-hover:text-gray-300'
-                            }`}>
-                              {roleData.description}
-                            </p>
-                            
-                            <div className="flex flex-wrap gap-2">
-                              {roleData.skills.slice(0, 6).map((skill) => (
-                                <span key={skill} className={`px-2 py-1 rounded text-xs transition-colors ${
-                                  selectedSampleRole === role 
-                                    ? 'bg-blue-800 bg-opacity-50 text-blue-200' 
-                                    : 'bg-gray-600 text-gray-300 group-hover:bg-gray-500'
-                                }`}>
-                                  {skill}
-                                </span>
-                              ))}
-                              {roleData.skills.length > 6 && (
-                                <span className={`px-2 py-1 rounded text-xs transition-colors ${
-                                  selectedSampleRole === role 
-                                    ? 'bg-blue-800 bg-opacity-30 text-blue-300' 
-                                    : 'bg-gray-600 text-gray-400 group-hover:bg-gray-500'
-                                }`}>
-                                  +{roleData.skills.length - 6} more
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                          
-                          <div className={`w-6 h-6 rounded-full border-2 transition-all duration-200 flex-shrink-0 ml-4 ${
-                            selectedSampleRole === role
-                              ? 'bg-blue-500 border-blue-500 shadow-lg'
-                              : 'border-gray-400 group-hover:border-gray-300'
+                        <div className="flex items-start justify-between mb-3">
+                          <h4 className={`font-semibold transition-colors ${
+                            isSelected ? 'text-white' : 'text-gray-200 group-hover:text-white'
                           }`}>
-                            {selectedSampleRole === role && (
-                              <svg className="w-4 h-4 text-white m-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                              </svg>
-                            )}
-                          </div>
+                            {role}
+                          </h4>
+                          {isSelected && (
+                            <span className="px-2 py-1 bg-blue-500 text-white text-xs rounded-full font-medium">
+                              Selected
+                            </span>
+                          )}
+                        </div>
+                        
+                        <p className={`text-sm mb-3 transition-colors ${
+                          isSelected ? 'text-gray-200' : 'text-gray-400 group-hover:text-gray-300'
+                        }`}>
+                          {roleData.description}
+                        </p>
+                        
+                        <div className="flex flex-wrap gap-2">
+                          {roleData.skills.slice(0, 6).map((skill) => (
+                            <span
+                              key={skill}
+                              className={`px-2 py-1 text-xs rounded-full font-medium transition-colors ${
+                                isSelected
+                                  ? 'bg-blue-500 bg-opacity-30 text-blue-200'
+                                  : 'bg-gray-600 text-gray-300 group-hover:bg-gray-500'
+                              }`}
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                          {roleData.skills.length > 6 && (
+                            <span className={`px-2 py-1 text-xs rounded-full font-medium ${
+                              isSelected
+                                ? 'text-blue-300'
+                                : 'text-gray-400 group-hover:text-gray-300'
+                            }`}>
+                              +{roleData.skills.length - 6} more
+                            </span>
+                          )}
                         </div>
                       </div>
                     );
                   })}
-                </div>
-                
-                {rolesList.length === 0 && (
-                  <div className="text-center py-12">
-                    <div className="text-gray-400 mb-2">
-                      <svg className="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                      </svg>
-                      No sample roles available for this category
+                  
+                  {rolesList.length === 0 && (
+                    <div className="text-center py-12">
+                      <div className="text-gray-400 mb-2">
+                        <svg className="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        </svg>
+                        No sample roles available for this category
+                      </div>
+                      <p className="text-sm text-gray-500">Please paste your job description manually</p>
                     </div>
-                    <p className="text-sm text-gray-500">Please use the "Paste Job Description" option instead</p>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
-            )}
+            </div>
           </div>
         </div>
 
