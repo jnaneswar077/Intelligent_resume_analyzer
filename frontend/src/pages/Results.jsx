@@ -863,6 +863,7 @@ function Step1ResumeUpload({ onNext, onFileSelect, selectedFile }) {
 // Step 2: Category Selection Component
 function Step2CategorySelection({ onNext, onPrev, selectedCategory, onCategorySelect, availableRoles }) {
   const categories = Object.keys(availableRoles || {});
+  const [hoveredCategory, setHoveredCategory] = useState(null);
   
   // Category icons mapping
   const categoryIcons = {
@@ -936,86 +937,136 @@ function Step2CategorySelection({ onNext, onPrev, selectedCategory, onCategorySe
               const roles = availableRoles[category] || {};
               const rolesList = Object.keys(roles);
               const colors = categoryColors[category] || { border: "border-gray-500", bg: "bg-gray-900", icon: "text-gray-400" };
+              const isHovered = hoveredCategory === category;
               
               return (
                 <div
                   key={category}
-                  onClick={() => onCategorySelect(category)}
-                  className={`group p-6 rounded-xl border-2 cursor-pointer transition-all duration-300 transform hover:scale-105 ${
-                    selectedCategory === category
-                      ? `${colors.border} ${colors.bg} bg-opacity-30 shadow-lg`
-                      : 'border-gray-600 bg-gray-800 bg-opacity-50 hover:border-gray-500 hover:bg-gray-700 hover:bg-opacity-50'
-                  }`}
+                  className="group h-80"
+                  onMouseEnter={() => setHoveredCategory(category)}
+                  onMouseLeave={() => setHoveredCategory(null)}
+                  style={{ perspective: '1000px' }}
                 >
-                  {/* Category Header */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className={`p-3 rounded-lg transition-colors ${
-                      selectedCategory === category ? colors.bg : 'bg-gray-700'
-                    } bg-opacity-50`}>
-                      <div className={`transition-colors ${
-                        selectedCategory === category ? colors.icon : 'text-gray-400 group-hover:text-gray-300'
+                  {/* Card Container with 3D flip effect */}
+                  <div 
+                    className={`relative w-full h-full transition-transform duration-700 cursor-pointer ${
+                      isHovered ? 'transform' : ''
+                    }`}
+                    style={{
+                      transformStyle: 'preserve-3d',
+                      transform: isHovered ? 'rotateY(180deg)' : 'rotateY(0deg)'
+                    }}
+                    onClick={() => onCategorySelect(category)}
+                  >
+                    {/* Front Face */}
+                    <div 
+                      className={`absolute inset-0 rounded-xl border-2 p-6 transition-all duration-300 ${
+                        selectedCategory === category
+                          ? `${colors.border} ${colors.bg} bg-opacity-30 shadow-lg`
+                          : 'border-gray-600 bg-gray-800 bg-opacity-50 hover:border-gray-500'
+                      }`}
+                      style={{ backfaceVisibility: 'hidden' }}
+                    >
+                      {/* Category Header */}
+                      <div className="flex items-center justify-between mb-4">
+                        <div className={`p-3 rounded-lg transition-colors ${
+                          selectedCategory === category ? colors.bg : 'bg-gray-700'
+                        } bg-opacity-50`}>
+                          <div className={`transition-colors ${
+                            selectedCategory === category ? colors.icon : 'text-gray-400 group-hover:text-gray-300'
+                          }`}>
+                            {categoryIcons[category]}
+                          </div>
+                        </div>
+                        
+                        <div className={`w-6 h-6 rounded-full border-2 transition-all duration-200 ${
+                          selectedCategory === category
+                            ? `${colors.border} ${colors.bg} bg-opacity-80`
+                            : 'border-gray-400'
+                        }`}>
+                          {selectedCategory === category && (
+                            <svg className="w-4 h-4 text-white m-0.5" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          )}
+                        </div>
+                      </div>
+                      
+                      {/* Category Title */}
+                      <h3 className={`text-lg font-semibold mb-3 transition-colors ${
+                        selectedCategory === category ? 'text-white' : 'text-gray-200 group-hover:text-white'
                       }`}>
-                        {categoryIcons[category] || (
-                          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                          </svg>
-                        )}
+                        {category.replace(' (SDE)', '').replace('Software Development', 'SDE')}
+                      </h3>
+                      
+                      {/* Roles Count */}
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className={`text-sm font-medium transition-colors ${
+                            selectedCategory === category ? colors.icon : 'text-gray-400 group-hover:text-gray-300'
+                          }`}>
+                            {rolesList.length} available roles
+                          </span>
+                        </div>
                       </div>
                     </div>
-                    
-                    <div className={`w-6 h-6 rounded-full border-2 transition-all duration-200 ${
-                      selectedCategory === category
-                        ? `${colors.border} ${colors.bg} bg-opacity-80`
-                        : 'border-gray-400'
-                    }`}>
-                      {selectedCategory === category && (
-                        <svg className="w-4 h-4 text-white m-0.5" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      )}
-                    </div>
-                  </div>
-                  
-                  {/* Category Title */}
-                  <h3 className={`text-lg font-semibold mb-3 transition-colors ${
-                    selectedCategory === category ? 'text-white' : 'text-gray-200 group-hover:text-white'
-                  }`}>
-                    {category.replace(' (SDE)', '').replace('Software Development', 'SDE')}
-                  </h3>
-                  
-                  {/* Roles Count and Preview */}
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className={`text-sm font-medium transition-colors ${
-                        selectedCategory === category ? colors.icon : 'text-gray-400 group-hover:text-gray-300'
-                      }`}>
-                        {rolesList.length} available roles
-                      </span>
-                      <div className={`w-2 h-2 rounded-full transition-colors ${
-                        selectedCategory === category ? colors.bg : 'bg-gray-500'
-                      }`}></div>
-                    </div>
-                    
-                    {/* Role Preview */}
-                    <div className="space-y-1">
-                      {rolesList.slice(0, 3).map((role) => (
-                        <div key={role} className={`text-xs px-2 py-1 rounded-full transition-colors ${
-                          selectedCategory === category 
-                            ? `${colors.bg} bg-opacity-40 text-gray-200` 
-                            : 'bg-gray-700 text-gray-300 group-hover:bg-gray-600'
+
+                    {/* Back Face - Roles Display */}
+                    <div 
+                      className={`absolute inset-0 rounded-xl border-2 p-6 transition-all duration-300 ${
+                        selectedCategory === category
+                          ? `${colors.border} ${colors.bg} bg-opacity-30 shadow-lg`
+                          : `${colors.border} ${colors.bg} bg-opacity-20`
+                      }`}
+                      style={{ 
+                        backfaceVisibility: 'hidden',
+                        transform: 'rotateY(180deg)'
+                      }}
+                    >
+                      {/* Selection checkbox in top right */}
+                      <div className="flex justify-end mb-4">
+                        <div className={`w-6 h-6 rounded-full border-2 transition-all duration-200 ${
+                          selectedCategory === category
+                            ? `${colors.border} ${colors.bg} bg-opacity-80`
+                            : `${colors.border}`
                         }`}>
-                          {role.length > 25 ? `${role.substring(0, 25)}...` : role}
+                          {selectedCategory === category && (
+                            <svg className="w-4 h-4 text-white m-0.5" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          )}
                         </div>
-                      ))}
-                      {rolesList.length > 3 && (
-                        <div className={`text-xs px-2 py-1 rounded-full transition-colors ${
+                      </div>
+                      
+                      {/* Available Roles List - Full Height */}
+                      <div className="space-y-2 h-56 overflow-y-auto">
+                        <h4 className={`text-lg font-semibold mb-4 ${colors.icon}`}>
+                          Available Roles ({rolesList.length})
+                        </h4>
+                        {rolesList.map((role, index) => (
+                          <div 
+                            key={role} 
+                            className={`text-sm px-4 py-3 rounded-lg transition-all duration-200 ${
+                              selectedCategory === category 
+                                ? `${colors.bg} bg-opacity-60 text-gray-100` 
+                                : `${colors.bg} bg-opacity-40 text-gray-200`
+                            }`}
+                          >
+                            {role}
+                          </div>
+                        ))}
+                      </div>
+                      
+                      {/* Click instruction */}
+                      <div className="mt-4">
+                        <div className={`text-xs px-3 py-2 rounded-full text-center ${
                           selectedCategory === category 
-                            ? `${colors.bg} bg-opacity-30 text-gray-300` 
-                            : 'bg-gray-700 text-gray-400 group-hover:bg-gray-600'
+                            ? `${colors.bg} bg-opacity-60 text-white` 
+                            : `${colors.bg} bg-opacity-40 text-gray-200`
                         }`}>
-                          +{rolesList.length - 3} more roles
+                          Click to select
                         </div>
-                      )}
+                      </div>
                     </div>
                   </div>
                 </div>
