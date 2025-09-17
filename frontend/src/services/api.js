@@ -20,6 +20,12 @@ async function getDetailedAnalysis({ resume_id, category, role }) {
   return res.data;
 }
 
-export const api = { getRoles, uploadAndAnalyze, getDetailedAnalysis };
+async function getDetailedAnalysisForJD({ resume_id, job_description }) {
+  const payload = { resume_id, choice: { type: 'JD', job_description } };
+  const res = await axios.post(`${BASE}/detailed_analysis`, payload);
+  return res.data;
+}
+
+export const api = { getRoles, uploadAndAnalyze, getDetailedAnalysis, getDetailedAnalysisForJD };
 
 
