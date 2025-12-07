@@ -1,0 +1,6 @@
+{
+  "deploy": {
+    "startCommand": "docker-compose -f deployment/docker-compose.yml up",
+    "buildCommand": "docker-compose -f deployment/docker-compose.yml build"
+  }
+}

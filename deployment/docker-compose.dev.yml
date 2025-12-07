@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../backend:/app/backend
+      - ../vector_store:/app/../vector_store
+    command: ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    
+  frontend:
+    build:
+      context: ..
+      dockerfile: frontend/Dockerfile
+      target: build  # Stop at build stage for development
+    ports:
+      - "5173:5173"
+    volumes:
+      - ../frontend:/app
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+    depends_on:
+      - backenddf

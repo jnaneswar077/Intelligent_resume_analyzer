@@ -40,6 +40,7 @@ def _mean_pool(vectors: np.ndarray) -> np.ndarray:
 def embed_resume_text(text: str) -> Tuple[np.ndarray, str]:
     # naive chunking by sentences/periods for MVP
     sentences = [s.strip() for s in text.split(".") if s.strip()]
+
     chunks: List[str] = []
     buf: List[str] = []
     token_estimate = 0
@@ -77,5 +78,3 @@ def load_cached_resume_vector(resume_id: str) -> Tuple[Optional[np.ndarray], Opt
     if not pair:
         return None, None
     return pair
-
-
