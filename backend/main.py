@@ -17,29 +17,32 @@ from backend.routers import resume, jobs, analysis, suggestions
 def create_app() -> FastAPI:
     app = FastAPI(title="Resume Analyzer API", version="0.1.0")
 
-    # For development, allow all origins - in production, specify exact origins
-    origins = [
-        "http://localhost:5173",
-        "https://intelligent-resume-analyzer.vercel.app",
-        "https://intelligent-resume-analyzer-*.vercel.app",
-        "https://intelligent-resume-analyzer.vercel.app/"
-    ]
-
+    # CORS configuration
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],  # Temporarily allow all origins for debugging
+        allow_origins=["*"],  # For now, allow all origins
         allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
+        allow_methods=["*"],  # Allow all methods
+        allow_headers=["*"],  # Allow all headers
+        expose_headers=["*"],  # Expose all headers
     )
     
     # Add request logging for debugging
     @app.middleware("http")
     async def log_requests(request: Request, call_next):
+        # Log incoming request
         print(f"Incoming request: {request.method} {request.url}")
         print(f"Headers: {request.headers}")
+        
+        # Process the request
         response = await call_next(request)
+        
+        # Add CORS headers to the response
         response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+        response.headers["Access-Control-Allow-Headers"] = "*"
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+        
         return response
 
     app.include_router(jobs.router, prefix="/api")
